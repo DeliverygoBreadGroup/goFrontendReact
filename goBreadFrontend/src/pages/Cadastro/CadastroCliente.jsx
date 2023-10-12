@@ -3,27 +3,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import '../../styles/StyleGlobal/style-global.css';
 import './CadastroCliente.css';
+import buttonBack from '../../assets/Icons/flecha 1.svg';
 
 function CadastroCliente() {
-    const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState({
-        cpf: '',
-        nome: '',
-        email: '',
-        numero: '',
-        senha: '',
-        confirmarSenha: '',
-        endereco: {
-          cep: '',
-          estado: '',
-          cidade: '',
-          bairro: '',
-          endereco: '',
-          numero: '',
-          complemento: '',
-        },
-      });
-
+    
     const nextStep = () => {
         setCurrentStep(currentStep + 1);
     };
@@ -32,21 +15,49 @@ function CadastroCliente() {
         setCurrentStep(currentStep - 1);
     };
 
+    const [currentStep, setCurrentStep] = useState(1);
+
+    const [formData, setFormData] = useState({
+        cpf: '',
+        nome: '',
+        email: '',
+        telefone: '',
+        senha: '',
+        endereco: {
+          cep: '',
+          numero: '',
+          complemento: '',
+        },
+      });
+
+  
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
+
+        if(name === 'cep' || name === 'numero' || name === 'complemento'){
+            setFormData((prevData) => ({
+                ...prevData,
+                endereco: {
+                  ...prevData.endereco,
+                  [name]: value,
+                },
+              }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+              }));
+        }
       };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        axios.post("http://localhost:8080/clientes", formData)
+        axios.post('http://localhost:8080/clientes', formData)
             .then((response) => {
                 console.log(response);
                 console.log(formData);
+                console.log("Passou por aqui, deu bom!")
             }).catch((error) => {
                 console.log("Deu erro!");
                 console.log(error);
@@ -100,15 +111,15 @@ function CadastroCliente() {
                                 />
                                 <input
                                     type="text"
-                                    name="numero"
+                                    name="telefone"
                                     placeholder="Número"
-                                    value={formData.numero}
+                                    value={formData.telefone}
                                     onChange={handleChange}
                                 />
                             </div>
 
                             <div className="access">
-                                <img src="icons/flecha 1.svg" alt=""/>
+                                <img src={buttonBack} alt=""/>
                                 <button onClick={nextStep}>PRÓXIMO</button>
                             </div>
                         </form>
@@ -135,12 +146,10 @@ function CadastroCliente() {
                                     type="password"
                                     name="confirmarSenha"
                                     placeholder="Confirme a senha"
-                                    value={formData.confirmarSenha}
-                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="access">
-                                <img src="icons/flecha 1.svg" alt=""/>
+                                <img src={buttonBack} alt=""/>  
                                 <button onClick={nextStep}>PRÓXIMO</button>
                             </div>
                         </form>
@@ -162,37 +171,7 @@ function CadastroCliente() {
                                     value={formData.cep}
                                     onChange={handleChange}
                                 />
-                                <div className="fieldBetween">
-                                    <input
-                                        type="text"
-                                        placeholder="Estado"
-                                        name="estado"
-                                        value={formData.estado}
-                                        onChange={handleChange}
-                                    />
-                                    <input
-                                        type="text"
-                                        name="cidade"
-                                        placeholder="Cidade"
-                                        value={formData.cidade}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <input
-                                    type="text"
-                                    name="bairro"
-                                    placeholder="Bairro"
-                                    value={formData.bairro}
-                                    onChange={handleChange}
-                                />
-
-                                <input
-                                    type="text"
-                                    placeholder="Endereço"
-                                    name="endereco"
-                                    value={formData.endereco}
-                                    onChange={handleChange}
-                                />
+                              
                                 <div className="fieldBetween">
                                     <input
                                         type="text"
@@ -211,8 +190,8 @@ function CadastroCliente() {
                                 </div>
                             </div>
                             <div className="access">
-                                <img src="icons/flecha 1.svg" alt=""/>
-                                <button onClick={handleSubmit}>PRÓXIMO</button>
+                                <img src={buttonBack} alt=""/>
+                                <button>PRÓXIMO</button>
                             </div>
                         </form>
                     </>
