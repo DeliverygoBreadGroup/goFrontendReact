@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React from 'react';
+import { useState } from 'react';
 import CadastroCliente from './pages/Cadastro/CadastroCliente';
 import Home from './pages/Home/Home';
 import Comerciante from './pages/Comerciante/Comerciante';
@@ -6,11 +7,32 @@ import Login from './pages/Login/Login';
 import Assinatura from './pages/Assinatura/Assinatura';
 import DetailsEntrega from './pages/DetailsEntrega/DetailsEntrega';
 import Pagamento from './pages/Pagamento/Pagamento';
+import Padaria from './pages/Padaria/Padaria';
+import Produto from './pages/Produto/Produto';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PortalCliente from './pages/PortalCliente/PortalCliente';
+import PersonalData from './pages/PortalCliente/PersonalData';
+import EditSignature from './pages/PortalCliente/EditSignature';
 
 function App() {
   return (
     <>
-     <CadastroCliente  />
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/comerciante' element={<Comerciante />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/cadastroCliente' element={<CadastroCliente />} />
+          <Route path='/assinatura' element={<Assinatura />} />
+          <Route path='/padaria' element={<Padaria />} />
+          <Route path='/produto' element={<Produto />} />
+          <Route path='/entrega' element={<DetailsEntrega />} />
+          <Route path='/pagamento' element={<Pagamento />} />
+          <Route path='/portalCliente' element={<PortalCliente />} />
+          <Route path='/dados' element={<PersonalData />} />
+          <Route path='/editarAssinatura' element={<EditSignature />} />
+        </Routes>
+      </Router>
     </>
   )
 }

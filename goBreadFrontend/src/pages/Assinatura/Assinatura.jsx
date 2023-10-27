@@ -3,6 +3,7 @@ import logoWhite from '../../assets/Icons/logoWhite.svg';
 import imagePeople from '../../assets/pexels-mart-production-8217506-removebg 1.png';
 import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
+import { Link } from 'react-router-dom';
 
 function Assinatura() {
     return (
@@ -25,9 +26,9 @@ function Assinatura() {
                     <div className="container">
                         <div className="contentInfoAssinatura">
                             <div className="content-circleAssinatura">
-                                <div className="circleAssinatura">
+                                <Link to="/cadastroCliente"><div className="circleAssinatura">
                                     <img src={iconBack} alt="" />
-                                </div>
+                                </div></Link>
                             </div>
 
                             <div className="contentAssinatura">
@@ -62,10 +63,10 @@ function Assinatura() {
 
 
                             <div class="containerAvanced">
-                                <div class="contentBtn">
+                                <Link to="/padaria"><div class="contentBtn">
                                     <p>Avançar</p>
                                     <img src={setaDireita} alt="" />
-                                </div>
+                                </div></Link>
                             </div>
                         </div>
                     </div>

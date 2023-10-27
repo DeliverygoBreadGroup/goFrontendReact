@@ -43,16 +43,16 @@
     font-size: 0.6rem;
     font-weight: 300;
     border-radius: 50px;
-    background-color: var(--cor-background);
-    border: 1px solid var(--cor-background);
+    background-color: var(--cor-black);
     color: var(--cor-white);
     transition: 1s;
     cursor: pointer;
+    border: none;
 }
 
 .btnInicio:hover {
     background-color: var(--cor-white);
-    border: 1px solid var(--cor-background);
+    border: 1px solid var(--cor-black);
     color: var(--cor-background);
     width: 45%;
     border-radius: 0px;

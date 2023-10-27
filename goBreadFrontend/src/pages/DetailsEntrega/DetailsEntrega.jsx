@@ -3,6 +3,7 @@ import imageEntrega from '../../assets/image.png';
 import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import '../../scss/DetailsEntrega/componentDetailsEntrega.css';
+import { Link } from 'react-router-dom';
 
 function DetailsEntrega() {
     return (
@@ -23,7 +24,7 @@ function DetailsEntrega() {
                             <div className="info-content">
                                 <div className="circle-content">
                                     <div className="circle">
-                                        <img src={iconBack} alt="" />
+                                        <Link to="/produto"><img src={iconBack} alt="" /></Link>
                                     </div>
                                 </div>
 
@@ -61,10 +62,10 @@ function DetailsEntrega() {
                             </div>
 
                             <div className="advanced-container">
-                                <div className="button-content">
+                                <Link to="/pagamento"><div className="button-content">
                                     <p>Avançar</p>
                                     <img src={setaDireita} alt="" />
-                                </div>
+                                </div></Link>
                             </div>
                         </div>
                     </div>

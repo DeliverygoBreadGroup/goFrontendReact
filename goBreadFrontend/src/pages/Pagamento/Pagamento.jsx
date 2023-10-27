@@ -5,6 +5,7 @@ import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import iconCarteira from '../../assets/Icons/card.svg';
 import iconCalendario from '../../assets/Icons/calendario.svg';
+import { Link } from 'react-router-dom';
 
 function Pagamento() {
     return (
@@ -25,7 +26,7 @@ function Pagamento() {
                             <div className="info-content">
                                 <div className="circle-content">
                                     <div className="circle">
-                                        <img src={iconBack} alt="" />
+                                        <Link to="/entrega"><img src={iconBack} alt="" /></Link>
                                     </div>
                                 </div>
 
@@ -80,10 +81,10 @@ function Pagamento() {
                             </div>
 
                             <div className="advanced-container">
-                                <div className="button-content">
+                            <Link to="/portalCliente"><div className="button-content">
                                     <p>Avançar</p>
                                     <img src={setaDireita} alt="" />
-                                </div>
+                                </div></Link>
                             </div>
                         </div>
                     </div>

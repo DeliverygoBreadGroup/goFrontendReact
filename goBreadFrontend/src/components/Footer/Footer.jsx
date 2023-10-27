@@ -1,14 +1,25 @@
 import './Footer.css';
 import '../../styles/StyleGlobal/style-global.css';
 import Logo from '../../assets/Icons/Group 16.svg';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Footer() {
+
+    function baixarCsv(){
+        axios.get('http://localhost:8080/comercios/download/clientes-csv')
+        .then(res => console.log(res.data),
+        window.location.href = 'http://localhost:8080/comercios/download/clientes-csv'
+        )
+        
+    }
+
     return (
         <footer className="footer">
             <div className="container containerFooter">
                 <div className="colunasInfo">
-                    <img className="imgLogo" src={Logo} alt="" />
-                        <button className="btnInicio">Início</button>
+                    <Link to="/"><img className="imgLogo" src={Logo} alt="" /></Link>
+                        <button className="btnInicio" onClick={baixarCsv}>CSV</button>
                 </div>
                 <div className="colunasInfo">
                     <a href="">Home</a>

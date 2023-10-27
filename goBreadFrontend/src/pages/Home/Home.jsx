@@ -11,6 +11,7 @@ import polygon from "../../assets/Icons/Polygon 1.svg";
 import './Home.css';
 import Footer from "../../components/Footer/Footer";
 import Slogan from "../../components/Slogan/Slogan";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function Home() {
     return (
@@ -23,8 +24,8 @@ function Home() {
                             <p className="sub-slogan">VENHA PARA <b>GO!</b></p><br></br>
                             <p className="slogan">Assine agora e<br></br> receba seu <br></br> <span>café da manhã </span>
                                 fresco<br></br>na sua porta.</p><br></br>
-                            <button className="commerce-button">Sou comerciante</button>
-                            <button className="client-button">Seja nosso cliente</button>
+                            <Link to="/comerciante"><button className="commerce-button">Sou comerciante</button></Link>
+                            <Link to="/cadastroCliente"><button className="client-button">Seja nosso cliente</button></Link>
                         </div>
                         <div className="containerRight">
                             <img src={ImageMockups} alt="" />
@@ -118,7 +119,7 @@ function Home() {
                                     <p>Brindes</p>
                                 </div>
                                 <div className="individualVantagem">
-                                    <button>ASSINAR BASIC</button>
+                                    <Link to="/cadastroCliente"><button>ASSINAR BASIC</button></Link>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +155,7 @@ function Home() {
                                     <p>Fidelidade Premiada</p>
                                 </div>
                                 <div className="individualVantagem">
-                                    <button>ASSINAR FAMILY</button>
+                                    <Link to="/cadastroCliente"><button>ASSINAR FAMILY</button></Link>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +173,7 @@ function Home() {
                                     Junte-se ao goBread! e alcance novos clientes
                                     em sua região. Aumente suas vendas e expanda
                                     seus negócios!</h5>
-                                <p><a href="#">Veja</a></p>
+                                    <Link to="/comerciante"><p><a href="#">Veja</a></p></Link>
                             </div>
                             <div className="image">
                                 <img src={imageComerciante} alt="" />

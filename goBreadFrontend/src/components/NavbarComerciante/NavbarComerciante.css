@@ -1,6 +1,6 @@
 @import url('/src/styles/StyleGlobal/style-global.css');
 
-header {
+.father-navbar-comerciante {
     width: 100%;
     height: 10vh;
     display: flex;
@@ -9,7 +9,7 @@ header {
     background-color: var(--cor-white);
 }
 
-header.sticky{
+.sticky{
     -webkit-transition: 0.3s;
     transition: 0.3s;
     z-index: 2;
