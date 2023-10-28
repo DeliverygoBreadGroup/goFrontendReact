@@ -128,3 +128,10 @@ header{
 #step2, #step3{
     display: none;
 }
+
+/*  */
+
+.error-message{
+    font-size: 0.75em;
+    color: var(--cor-principal);
+}
