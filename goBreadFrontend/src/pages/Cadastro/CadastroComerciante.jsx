@@ -14,26 +14,11 @@ import olhoFechado from '../../assets/Icons/olhoFechado.png';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import { Link, createPath } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function CadastroCliente() {
+function CadastroComerciante() {
     const history = useNavigate();
-
-    const validationRegister = yup.object().shape({
-        cpf: yup.string().required("O CPF é obrigatório."),
-        nome: yup.string().required("O NOME é obrigatório.").min(3, "O NOME deve ter no mínimo 3 caracteres.").max(255, "O NOME deve ter no máximo 255 caracteres."),
-        email: yup.string().required("O EMAIL é obrigatório.").max(255, "O EMAIL deve ter no máximo 255 caracteres."),
-        telefone: yup.string().required("O TELEFONE é obrigatório.").min(11, "O TELEFONE deve ter no mínimo 11 caracteres.").max(11, "O TELEFONE deve ter no máximo 11 caracteres."),
-        senha: yup.string().required("A SENHA é obrigatória.").min(8, "A SENHA deve ter no mínimo 8 caracteres.").max(16, "A SENHA deve ter no máximo 16 caracteres."),
-        cep: yup.string().required("O CEP é obrigatório."),
-        numero: yup.string().required("O NÚMERO é obrigatório.").min(1, "O NÚMERO deve ter no mínimo 1 caracter."),
-        complemento: yup.string().required("O COMPLEMENTO é obrigatório.").min(3, "O COMPLEMENTO deve ter no mínimo 3 caracteres.").max(255, "O COMPLEMENTO deve ter no máximo 255 caracteres."),
-    });
-
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(validationRegister)
-    });
 
     const [currentStep, setCurrentStep] = useState(1);
 
@@ -45,14 +30,30 @@ function CadastroCliente() {
         setCurrentStep(currentStep - 1);
     };
 
+    const validationRegister = yup.object().shape({
+        responsavel: yup.string().required("O Nome do Responsável é obrigatório.").min(3, "O NOME deve ter no mínimo 3 caracteres.").max(255, "O NOME deve ter no máximo 255 caracteres."),
+        email: yup.string().required("O EMAIL é obrigatório.").max(255, "O EMAIL deve ter no máximo 255 caracteres."),
+        telefone: yup.string().required("O TELEFONE é obrigatório.").min(11, "O TELEFONE deve ter no mínimo 11 caracteres.").max(11, "O TELEFONE deve ter no máximo 11 caracteres."),
+        senha: yup.string().required("A SENHA é obrigatória.").min(8, "A SENHA deve ter no mínimo 8 caracteres.").max(16, "A SENHA deve ter no máximo 16 caracteres."),
+        cep: yup.string().required("O CEP é obrigatório."),
+        razaoSocial: yup.string().required("A Razão Social é obrigatório.").max(255, "A Razão Social deve ter no máximo 255 caracteres."),
+        cnpj: yup.string().required("O CNPJ é obrigatório").min(14, "O CNPJ deve ter no mínimo 14 caracteres.").max(14, "O CNPJ deve ter no máximo 14 caracteres."),
+        numero: yup.string().required("O NÚMERO é obrigatório.").min(1, "O NÚMERO deve ter no mínimo 1 caracter."),
+        complemento: yup.string().required("O COMPLEMENTO é obrigatório.").min(3, "O COMPLEMENTO deve ter no mínimo 3 caracteres.").max(255, "O COMPLEMENTO deve ter no máximo 255 caracteres."),
+    });
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(validationRegister)
+    });
+
     const [formData, setFormData] = useState({
-        cpf: '',
-        nome: '',
+        responsavel: '',
         email: '',
-        telefone: '',
         senha: '',
-        tipo: 'cliente',
-        assinatura: 'basic',
+        cnpj: '',
+        razaoSocial: '',
+        telefone: '',
+        tipo: 'comerciante',
         endereco: {
             cep: '',
             numero: '',
@@ -81,16 +82,17 @@ function CadastroCliente() {
 
     const isFormValid = () => {
         return (
-            formData.cpf.trim() !== '' &&
-            formData.nome.trim() !== '' &&
+            formData.responsavel.trim() !== '' &&
             formData.email.trim() !== '' &&
-            formData.telefone.trim() !== ''
+            formData.senha && formData.senha.trim() !== ''
         );
     };
 
-    const isFormValidPassword = () => {
+    const isFormValidInfoCommerce = () => {
         return (
-            formData.senha && formData.senha.trim() !== ''
+            formData.cnpj.trim() !== '' &&
+            formData.razaoSocial.trim() !== '' &&
+            formData.telefone.trim() !== ''
         );
     };
 
@@ -109,28 +111,32 @@ function CadastroCliente() {
     };
 
     const addRegister = async (e) => {
-        axios.post('http://localhost:8080/clientes/cadastrar', formData, config)
+        axios.post('http://localhost:8080/comercios/cadastrar', formData, config)
             .then((response) => {
-                if (response.status == 201 && response.data?.id) {
+                if(response.status == 201 && response.data?.id){
                     sessionStorage.setItem('id', response.data.id);
-                    sessionStorage.setItem('bairro', response.data.endereco.bairro);
-                    console.log(response);
-                    console.log(formData);
-                    toast.success("Cadastro realizado!", {
-                        position: "top-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    })
-
-                    setTimeout(() => {
-                        history('/assinatura');
-                    }, 2000);
                 }
+                console.log(response);
+                console.log(formData);
+                toast.success("Cadastro realizado!", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+
+                console.log(response.data);
+                console.log(response);
+                sessionStorage.setItem('comercianteData', JSON.stringify(response));
+
+                setTimeout(() => {
+                    history('/produtoComerciante');
+                }, 2000);
+
             }).catch((error) => {
                 console.log(error);
                 console.log(formData);
@@ -182,27 +188,19 @@ function CadastroCliente() {
                         <>
                             <form onSubmit={handleSubmit(addRegister)}>
                                 <div className="titles">
-                                    <h1>Informações do cliente</h1>
-                                    <h3>Preciso que informe algumas informações.</h3>
+                                    <h1>Informações do Responsável</h1>
+                                    <h3>Preencha as informações do responsável da sua loja.</h3>
                                 </div>
 
                                 <div className="form-inputs">
                                     <input
                                         type="text"
-                                        name="cpf" {...register("cpf")}
-                                        placeholder="CPF"
-                                        value={formData.cpf}
+                                        name="responsavel" {...register("responsavel")}
+                                        placeholder="Nome do Responsável"
+                                        value={formData.responsavel}
                                         onChange={handleChange}
                                     />
-                                    <p className='error-message'>{errors.cpf?.message}</p>
-                                    <input
-                                        type="text"
-                                        name="nome" {...register("nome")}
-                                        placeholder="Nome"
-                                        value={formData.nome}
-                                        onChange={handleChange}
-                                    />
-                                    <p className='error-message'>{errors.nome?.message}</p>
+                                    <p className='error-message'>{errors.responsavel?.message}</p>
                                     <input
                                         type="email"
                                         name="email" {...register("email")}
@@ -211,21 +209,45 @@ function CadastroCliente() {
                                         onChange={handleChange}
                                     />
                                     <p className='error-message'>{errors.email?.message}</p>
+                                </div>
+
+                                <div className="titles">
+                                    <h1>Crie sua senha</h1>
+                                    <h3>Faça o cadastro da sua senha, e confirme.</h3>
+                                </div>
+
+                                <div className="form-inputs">
                                     <input
-                                        type="text"
-                                        name="telefone" {...register("telefone")}
-                                        placeholder="Número (Contato)"
-                                        value={formData.telefone}
+                                        type="password"
+                                        name="senha" {...register("senha")}
+                                        placeholder="Senha"
+                                        id='senha'
+                                        value={formData.senha}
                                         onChange={handleChange}
                                     />
-                                    <p className='error-message'>{errors.telefone?.message}</p>
+                                    <p className='error-message'>{errors.senha?.message}</p>
+                                    <img src={olho} alt="" id='btn-ver-senha' onClick={exibirSenha}/>
+                                    <input
+                                        type="password"
+                                        name="confirmarSenha" {...register("confirmarSenha")}
+                                        id='confirmarSenha'
+                                        placeholder="Confirme a senha"
+                                    />
+                                    <p className='error-message' id="senhaDiferenteError" style={{ color: 'red', display: 'none' }}>As senhas são diferentes.</p>
                                 </div>
 
                                 <div className="access">
-                                    <Link to="/"><img src={buttonBack} alt="" /></Link>
+                                    <Link to="/Comerciante"><img src={buttonBack} alt="" /></Link>
                                     <button onClick={() => {
-                                        if (isFormValid()) {
-                                            nextStep();
+                                        const senha = formData.senha;
+                                        const confirmarSenha = document.getElementById('confirmarSenha').value;;
+
+                                        if (senha === confirmarSenha) {
+                                            if (isFormValid()) {
+                                                nextStep();
+                                            }
+                                        } else {
+                                            document.getElementById('senhaDiferenteError').style.display = 'block';
                                         }
                                     }}>PRÓXIMO</button>
                                 </div>
@@ -237,40 +259,46 @@ function CadastroCliente() {
                         <>
                             <form onSubmit={handleSubmit(addRegister)}>
                                 <div className="titles">
-                                    <h1>Crie sua senha</h1>
-                                    <h3>Faça o cadastro da sua senha, e confirme.</h3>
+                                    <h1>Informações do Comércio</h1>
+                                    <h3>Preencha as informações do comércio.</h3>
                                 </div>
                                 <div className="form-inputs">
                                     <input
-                                        type="password"
-                                        name="senha" {...register("senha")}
-                                        placeholder="Senha"
-                                        id='senha'
-                                        value={formData.senha}
+                                        type='text'
+                                        name='cnpj' {...register("cnpj")}
+                                        placeholder='CNPJ'
+                                        value={formData.cnpj}
                                         onChange={handleChange}
                                     />
-                                    <img src={olho} alt="" id='btn-ver-senha' onClick={exibirSenha} />
-                                    <p className='error-message'>{errors.senha?.message}</p>
+                                    <p className='error-message'>{errors.cnpj?.message}</p>
                                     <input
-                                        type="password"
-                                        name="confirmarSenha" {...register("confirmarSenha")}
-                                        id='confirmarSenha'
-                                        placeholder="Confirme a senha"
+                                        type='text'
+                                        name='razaoSocial' {...register("razaoSocial")}
+                                        placeholder='Nome do comércio    (como aparecerá na plataforma)'
+                                        value={formData.razaoSocial}
+                                        onChange={handleChange}
                                     />
-                                    <p className='error-message' id="senhaDiferenteError" style={{ color: 'red', display: 'none' }}>As senhas são diferentes.</p>
+                                    <p className='error-message'>{errors.razaoSocial?.message}</p>
+                                    <input
+                                        type='text'
+                                        name='nomeComercio' {...register("nomeComercio")}
+                                        placeholder='Razão Social'
+                                    />
+                                    <p className='error-message'>{errors.nomeComercio?.message}</p>
+                                    <input
+                                        type='text'
+                                        name='telefone' {...register("telefone")}
+                                        placeholder='Telefone    (como aparecerá na plataforma)'
+                                        value={formData.telefone}
+                                        onChange={handleChange}
+                                    />
+                                    <p className='error-message'>{errors.telefone?.message}</p>
                                 </div>
                                 <div className="access">
                                     <img src={buttonBack} alt="" onClick={prevStep} />
                                     <button onClick={() => {
-                                        const senha = formData.senha;
-                                        const confirmarSenha = document.getElementById('confirmarSenha').value;;
-
-                                        if (senha === confirmarSenha) {
-                                            if (isFormValidPassword()) {
-                                                nextStep();
-                                            }
-                                        } else {
-                                            document.getElementById('senhaDiferenteError').style.display = 'block';
+                                        if (isFormValidInfoCommerce()) {
+                                            nextStep();
                                         }
                                     }}>PRÓXIMO</button>
                                 </div>
@@ -289,7 +317,7 @@ function CadastroCliente() {
                                     <input
                                         type="text"
                                         placeholder="CEP"
-                                        name="cep" {...register("cep")}
+                                        name='cep' {...register("cep")}
                                         value={formData.cep}
                                         onChange={handleChange}
                                     />
@@ -297,12 +325,12 @@ function CadastroCliente() {
                                     <div className="fieldBetween">
                                         <input
                                             type="text"
-                                            name="numero" {...register("numero")}
                                             placeholder="Número"
+                                            name='numero' {...register("numero")}
                                             value={formData.numero}
                                             onChange={handleChange}
                                         />
-
+                                        <p className='error-message'>{errors.numero?.message}</p>
                                         <input
                                             type="text"
                                             name="complemento" {...register("complemento")}
@@ -310,10 +338,8 @@ function CadastroCliente() {
                                             value={formData.complemento}
                                             onChange={handleChange}
                                         />
-
+                                        <p className='error-message'>{errors.complemento?.message}</p>
                                     </div>
-                                    <p className='error-message'>{errors.numero?.message}</p>
-                                    <p className='error-message'>{errors.complemento?.message}</p>
                                 </div>
                                 <div className="access">
                                     <img src={buttonBack} alt="" onClick={prevStep} />
@@ -327,9 +353,9 @@ function CadastroCliente() {
                         </>
                     )}
                 </div>
-            </section>
+            </section >
         </>
-    );
+    )
 }
 
-export default CadastroCliente;
+export default CadastroComerciante;

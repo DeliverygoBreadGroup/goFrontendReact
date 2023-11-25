@@ -83,6 +83,7 @@ header{
 /* Formulário | Inputs */
 
 .form-inputs{
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -96,6 +97,13 @@ header{
     border-bottom: 0.2px solid var(--cor-sub-letra);
     font-weight: 300;
     height: 40px;
+}
+
+.form-inputs img{
+    position: absolute;
+    right: 5%;
+    width: 4%;
+    cursor: pointer;
 }
 
 .fieldBetween{

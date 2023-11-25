@@ -5,8 +5,70 @@ import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import imagemBread from '../../assets/main.png';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import CardProduto from '../../components/ProdutoComponent/ProdutoComponent';
 
 function Produto() {
+
+    const [itensPadaria, setItensPadaria] = useState([]);
+
+    const selectedPadariaId = sessionStorage.getItem('selectedPadariaId');
+    const idCliente = sessionStorage.getItem('id');
+    const idComercio = sessionStorage.getItem('selectedPadariaId');
+
+    useEffect(() => {
+        async function fetchItensPadaria() {
+            try {
+                const response = await axios.get(`http://localhost:8080/itens-comercio/${selectedPadariaId}`);
+                setItensPadaria(response.data);
+            } catch (error) {
+                console.error('Erro ao buscar os itens da padaria:', error);
+            }
+        }
+
+        fetchItensPadaria();
+    }, []);
+
+    const [pedidoItens, setPedidoItens] = useState([]);
+
+    const updateQuantidadeSelecionada = (productId, quantidade) => {
+        const updatedItensPadaria = itensPadaria.map((item) => {
+            if (item.produto.id === productId) {
+                return { ...item, quantidadeSelecionada: quantidade };
+            }
+            return item;
+        });
+        setItensPadaria(updatedItensPadaria);
+    };
+
+    const enviarPedido = async () => {
+        const itensPedido = itensPadaria.map((item) => ({
+            quantidade: item.quantidadeSelecionada,
+            produto: {
+                id: item.produto.id
+            }
+        }));
+
+        console.log(itensPedido);
+
+        const data = {
+            diaEntrega: 'Domingo', 
+            horarioEntrega: '13:00',
+            itensPedido: itensPedido,
+            idCliente: idCliente,
+            idComercio: idComercio
+        };
+
+        try {
+            // Enviar a requisição POST
+            const response = await axios.post('http://localhost:8080/pedidos', data);
+            console.log('Pedido enviado:', response.data);
+        } catch (error) {
+            console.error('Erro ao enviar pedido:', error);
+        }
+    };
+
     return (
         <>
             <main>
@@ -40,69 +102,21 @@ function Produto() {
 
                                     <div className="containerProducts">
                                         <div className="content">
-                                            <div className="cardProduto">
-                                                <img src={imagemBread} alt="" />
-                                                    <h1>Pão</h1>
-                                                    <p>R$ 9 / Porção</p>
-                                                    <div className="addAndRemove">
-                                                        <button>-</button>
-                                                        <p>3 porções</p>
-                                                        <button>+</button>
-                                                    </div>
-                                                    <h1 className="preco">R$ 27</h1>
-                                            </div>
-                                            <div className="cardProduto">
-                                                <img src={imagemBread} alt="" />
-                                                    <h1>Pão</h1>
-                                                    <p>R$ 9 / Porção</p>
-                                                    <div className="addAndRemove">
-                                                        <button>-</button>
-                                                        <p>3 porções</p>
-                                                        <button>+</button>
-                                                    </div>
-                                                    <h1 className="preco">R$ 27</h1>
-                                            </div>
-                                            <div className="cardProduto">
-                                                <img src={imagemBread} alt="" />
-                                                    <h1>Pão</h1>
-                                                    <p>R$ 9 / Porção</p>
-                                                    <div className="addAndRemove">
-                                                        <button>-</button>
-                                                        <p>3 porções</p>
-                                                        <button>+</button>
-                                                    </div>
-                                                    <h1 className="preco">R$ 27</h1>
-                                            </div>
-                                            <div className="cardProduto">
-                                                <img src={imagemBread} alt="" />
-                                                    <h1>Pão</h1>
-                                                    <p>R$ 9 / Porção</p>
-                                                    <div className="addAndRemove">
-                                                        <button>-</button>
-                                                        <p>3 porções</p>
-                                                        <button>+</button>
-                                                    </div>
-                                                    <h1 className="preco">R$ 27</h1>
-                                            </div>
-                                            <div className="cardProduto">
-                                                <img src={imagemBread} alt="" />
-                                                    <h1>Pão</h1>
-                                                    <p>R$ 9 / Porção</p>
-                                                    <div className="addAndRemove">
-                                                        <button>-</button>
-                                                        <p>3 porções</p>
-                                                        <button>+</button>
-                                                    </div>
-                                                    <h1 className="preco">R$ 27</h1>
-                                            </div>
+                                            {itensPadaria?.map((item) => (
+                                                <CardProduto
+                                                    key={item.produto.id}
+                                                    produto={item.produto}
+                                                    updateQuantidadeSelecionada={updateQuantidadeSelecionada}
+                                                />
+                                            ))}
                                         </div>
                                     </div>
 
                                     <div className="advanced-container">
-                                    <Link to="/entrega"><div className="button-content">
+                                        <div className="button-content" onClick={enviarPedido}>
                                             <p>Avançar</p>
                                             <img src={setaDireita} alt="" />
-                                        </div></Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

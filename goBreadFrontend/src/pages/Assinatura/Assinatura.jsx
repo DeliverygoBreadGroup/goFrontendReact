@@ -5,9 +5,45 @@ import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import { Link } from 'react-router-dom';
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 function Assinatura() {
+    const history = useNavigate();
+
+    const [tipoAssinatura, setTipoAssinatura] = useState();
+
+    const handleEnviar = () => {
+        const idCliente = sessionStorage.getItem('id');
+
+        if (!tipoAssinatura) {
+            toast.error('Por favor, selecione um tipo de assinatura.');
+            return;
+        }
+
+        axios.patch(`http://localhost:8080/clientes/assinatura/${idCliente}?assinatura=${tipoAssinatura}`)
+            .then((response) => {
+                console.log(response);
+                sessionStorage.setItem('clienteData', JSON.stringify(response));
+                toast.success('Assinatura concluída! Aproveite todos os benefícios.');
+
+                setTimeout(() => {
+                    history('/padaria');
+                }, 1000);
+            })
+            .catch((error) => {
+                console.error('Erro ao atualizar a assinatura:', error);
+                toast.error('Erro ao atualizar a assinatura!');
+            });
+    }
+
     return (
         <>
+            <ToastContainer />
             <section className='containerFather'>
                 <div className='containerLeft'>
                     <div class="contentNavbar">
@@ -35,7 +71,7 @@ function Assinatura() {
                                 <div className="container">
                                     <div class="grid-wrapper grid-col-auto">
                                         <label for="radio-card-1" class="radio-card">
-                                            <input type="radio" name="radio-card" id="radio-card-1" checked />
+                                            <input type="radio" name="radio-card" id="radio-card-1" value="basic" checked={tipoAssinatura === 'basic'} onChange={(e) => setTipoAssinatura(e.target.value)} />
                                             <div class="card-content-wrapper">
                                                 <span class="check-icon"></span>
                                                 <div class="card-content">
@@ -47,7 +83,7 @@ function Assinatura() {
                                         </label>
 
                                         <label for="radio-card-2" class="radio-card">
-                                            <input type="radio" name="radio-card" id="radio-card-2" />
+                                            <input type="radio" name="radio-card" id="radio-card-2" value="family" checked={tipoAssinatura === 'family'} onChange={(e) => setTipoAssinatura(e.target.value)} />
                                             <div class="card-content-wrapper">
                                                 <span class="check-icon"></span>
                                                 <div class="card-content">
@@ -63,10 +99,10 @@ function Assinatura() {
 
 
                             <div class="containerAvanced">
-                                <Link to="/padaria"><div class="contentBtn">
+                                <div class="contentBtn" onClick={handleEnviar}>
                                     <p>Avançar</p>
                                     <img src={setaDireita} alt="" />
-                                </div></Link>
+                                </div>
                             </div>
                         </div>
                     </div>

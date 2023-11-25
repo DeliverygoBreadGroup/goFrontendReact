@@ -13,6 +13,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PortalCliente from './pages/PortalCliente/PortalCliente';
 import PersonalData from './pages/PortalCliente/PersonalData';
 import EditSignature from './pages/PortalCliente/EditSignature';
+import CadastroComerciante from './pages/Cadastro/CadastroComerciante';
+import ProdutoComerciante from './pages/ProdutoComerciante/ProdutoComerciante';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path='/portalCliente' element={<PortalCliente />} />
           <Route path='/dados' element={<PersonalData />} />
           <Route path='/editarAssinatura' element={<EditSignature />} />
+          <Route path='/cadastroComerciante' element={<CadastroComerciante />} />
+          <Route path='/produtoComerciante' element={<ProdutoComerciante />} />
         </Routes>
       </Router>
     </>

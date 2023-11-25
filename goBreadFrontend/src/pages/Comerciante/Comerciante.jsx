@@ -13,6 +13,7 @@ import polygon from "../../assets/Icons/Polygon 1.svg";
 import mackupPersonalize from "../../assets/Group 29.png";
 import Slogan from '../../components/Slogan/Slogan';
 import Footer from '../../components/Footer/Footer';
+import { Link } from 'react-router-dom';
 
 function Comerciante() {
     return (
@@ -29,9 +30,9 @@ function Comerciante() {
                                 serviços.
                             </div>
                             <div className="access">
-                                <button className="btnCadastrar">
+                                <Link to={"/cadastroComerciante"}><button className="btnCadastrar">
                                     Fazer meu cadastro
-                                </button>
+                                </button></Link>
                             </div>
                         </div>
                         <div className="divisao">

@@ -14,7 +14,10 @@ function Login() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
-    const handleSubmit = async (e) => {
+    console.log(email);
+    console.log(senha);
+
+    const submeter = async (e) => {
         e.preventDefault();
 
         const data = {
@@ -22,9 +25,31 @@ function Login() {
             senha: senha,
         };
 
-        const response = await axios.post('http://localhost:8080/clientes/login', data)
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        axios.post('http://localhost:8080/clientes/login', data, config)
             .then((response) => {
-                console.log(response.data);
+                if (response.status == 200 && response.data?.token) {
+                    sessionStorage.setItem('authToken', response.data.token);
+                    toast.success("Login realizado com sucesso!", {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                    console.log(response.data);
+                    console.log(response.data.token);
+                } else {
+                    throw new Error('Ops! Ocorreu um erro interno.');
+                }
             }).catch((error) => {
                 console.log(error);
             });
@@ -32,6 +57,7 @@ function Login() {
 
     return (
         <>
+            <ToastContainer />
             <header className='headerLogin'>
                 <section className='container'>
                     <div className='contentLogin'>
@@ -48,11 +74,11 @@ function Login() {
                                 <img src={LogoLogin} alt="" />
                             </div>
                             <div className="containerRightLogin">
-                                <h1>Acontecendo agora.</h1>
+                                <h1>Entrar</h1>
                                 <div className="titleLogin">
-                                    <h3><span>Acesse</span> seu ambiente.</h3>
+                                    <h3><span>Acesse</span> seu portal de compras.</h3>
                                 </div>
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={submeter}>
                                     <div className="form-inputsLogin">
                                         <input
                                             type="email"
@@ -61,7 +87,6 @@ function Login() {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
-
                                         <input
                                             type="password"
                                             placeholder="Senha"
@@ -72,7 +97,8 @@ function Login() {
                                     </div>
                                 </form>
                                 <div className="accessLogin">
-                                    <button>Entrar</button>
+                                    <button onClick={submeter}>Entrar</button>
+                                    <p className='click-here'>Não tem cadastro? <a href='/' className='click-link-register'>Clique aqui</a> para fazer.</p>
                                 </div>
                             </div>
                         </div>

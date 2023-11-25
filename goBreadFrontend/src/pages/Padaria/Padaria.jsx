@@ -1,11 +1,40 @@
 import './Padaria.css';
 import logoWhite from '../../assets/Icons/logoWhite.svg';
 import imageEntrega from '../../assets/image.png';
-import imageBakery from '../../assets/ImageBakery.png';
 import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import { Link } from 'react-router-dom';
 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import BakeryCard from '../../components/BakeryCard/BakeryCard';
+
+
+
 function Padaria() {
+
+    const [padarias, setPadarias] = useState([]);
+    const [selectedPadariaId, setSelectedPadariaId] = useState();
+
+    useEffect(() => {
+        const bairroAtual = sessionStorage.getItem('bairro');
+      
+        if (bairroAtual) {
+          axios.get('http://localhost:8080/comercios/bairro', {
+            params: {
+              bairro: bairroAtual
+            }
+          })
+          .then(response => {
+            setPadarias(response.data);
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error('Erro ao buscar padarias por bairro:', error);
+          });
+        }
+      }, []);
+      
+
     return (
         <>
             <main>
@@ -39,70 +68,14 @@ function Padaria() {
                                 </div>
 
                                 <div className="content-card">
-                                    <div className="card">
-                                        <img src={imageBakery} alt="Padaria" />
-                                            <div className="bakery-form">
-                                                <h2>PADARIA VILA ROMANA</h2>
-                                                <p><b>Rua Itapé-açu, 1002</b></p>
-                                                <p className="city">Cidade Jardim, São Paulo</p>
-                                                <div className="bottom">
-                                                    <div className="circleCard"></div>
-                                                    <p>Telefone: (11) 1234-5678</p>
-                                                </div>
-                                                <Link to="/produto"><button>Ir comprar</button></Link>
-                                            </div>
-                                    </div>
-                                    <div className="card">
-                                        <img src={imageBakery} alt="Padaria" />
-                                            <div className="bakery-form">
-                                                <h2>PADARIA VILA ROMANA</h2>
-                                                <p><b>Rua Itapé-açu, 1002</b></p>
-                                                <p className="city">Cidade Jardim, São Paulo</p>
-                                                <div className="bottom">
-                                                    <div className="circleCard"></div>
-                                                    <p>Telefone: (11) 1234-5678</p>
-                                                </div>
-                                                <Link to="/produto"><button>Ir comprar</button></Link>
-                                            </div>
-                                    </div>
-                                    <div className="card">
-                                        <img src={imageBakery} alt="Padaria" />
-                                            <div className="bakery-form">
-                                                <h2>PADARIA VILA ROMANA</h2>
-                                                <p><b>Rua Itapé-açu, 1002</b></p>
-                                                <p className="city">Cidade Jardim, São Paulo</p>
-                                                <div className="bottom">
-                                                    <div className="circleCard"></div>
-                                                    <p>Telefone: (11) 1234-5678</p>
-                                                </div>
-                                                <Link to="/produto"><button>Ir comprar</button></Link>
-                                            </div>
-                                    </div>
-                                    <div className="card">
-                                        <img src={imageBakery} alt="Padaria" />
-                                            <div className="bakery-form">
-                                                <h2>PADARIA VILA ROMANA</h2>
-                                                <p><b>Rua Itapé-açu, 1002</b></p>
-                                                <p className="city">Cidade Jardim, São Paulo</p>
-                                                <div className="bottom">
-                                                    <div className="circleCard"></div>
-                                                    <p>Telefone: (11) 1234-5678</p>
-                                                </div>
-                                                <Link to="/produto"><button>Ir comprar</button></Link>
-                                            </div>
-                                    </div>
-                                    <div className="card">
-                                        <img src={imageBakery} alt="Padaria" />
-                                            <div className="bakery-form">
-                                                <h2>PADARIA VILA ROMANA</h2>
-                                                <p><b>Rua Itapé-açu, 1002</b></p>
-                                                <p className="city">Cidade Jardim, São Paulo</p>
-                                                <div className="bottom">
-                                                    <div className="circleCard"></div>
-                                                    <p>Telefone: (11) 1234-5678</p>
-                                                </div>
-                                                <Link to="/produto"><button>Ir comprar</button></Link>
-                                            </div>
+                                    <div className="content-card">
+                                        {padarias.map((padaria, index) => (
+                                            <BakeryCard 
+                                            key={index} 
+                                            bakery={padaria} 
+                                            onSelectPadaria={setSelectedPadariaId}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                             </div>
