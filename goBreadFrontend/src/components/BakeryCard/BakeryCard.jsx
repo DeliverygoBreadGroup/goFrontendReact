@@ -22,7 +22,7 @@ const BakeryCard = ({ bakery, onSelectPadaria }) => {
           <div className="circleCard"></div>
           <p>Telefone: {bakery.telefone}</p>
         </div>
-        <Link to="/produto"><button onClick={handleSelectPadaria}>Ir comprar</button></Link>
+        <Link to="/entrega"><button onClick={handleSelectPadaria}>Ir comprar</button></Link>
       </div>
     </div>
   );

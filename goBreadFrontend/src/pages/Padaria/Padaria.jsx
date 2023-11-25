@@ -8,8 +8,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BakeryCard from '../../components/BakeryCard/BakeryCard';
 
-
-
 function Padaria() {
 
     const [padarias, setPadarias] = useState([]);

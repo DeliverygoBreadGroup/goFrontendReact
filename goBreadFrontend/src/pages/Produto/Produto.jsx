@@ -2,7 +2,6 @@ import './Produto.css';
 import logoWhite from '../../assets/Icons/logoWhite.svg';
 import imageEntrega from '../../assets/paes.png';
 import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
-import imagemBread from '../../assets/main.png';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
@@ -10,6 +9,16 @@ import axios from 'axios';
 import CardProduto from '../../components/ProdutoComponent/ProdutoComponent';
 
 function Produto() {
+
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    useEffect(() => {
+        const selectedItems = JSON.parse(sessionStorage.getItem('selectedInputs'));
+        const selectedOptions = Object.entries(selectedItems)
+            .filter(([key, value]) => value.checked && key.startsWith('option') && typeof value === 'object')
+            .map(([key, value]) => value.label);
+            console.log(selectedOptions);
+    }, []);
 
     const [itensPadaria, setItensPadaria] = useState([]);
 
@@ -53,15 +62,14 @@ function Produto() {
         console.log(itensPedido);
 
         const data = {
-            diaEntrega: 'Domingo', 
-            horarioEntrega: '13:00',
+            diaEntrega: selectedOptions[0],
+            horarioEntrega: selectedOptions[1],
             itensPedido: itensPedido,
             idCliente: idCliente,
             idComercio: idComercio
         };
 
         try {
-            // Enviar a requisição POST
             const response = await axios.post('http://localhost:8080/pedidos', data);
             console.log('Pedido enviado:', response.data);
         } catch (error) {
