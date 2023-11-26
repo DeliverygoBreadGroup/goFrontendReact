@@ -3,13 +3,15 @@ import logoWhite from '../../assets/Icons/logoWhite.svg';
 import imageEntrega from '../../assets/paes.png';
 import iconBack from '../../assets/Icons/🦆 icon _arrow left_.svg';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CardProduto from '../../components/ProdutoComponent/ProdutoComponent';
+import Swal from 'sweetalert2'
 
 function Produto() {
 
+    const Navigation = useNavigate(); 
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     useEffect(() => {
@@ -17,7 +19,7 @@ function Produto() {
         const options = Object.entries(selectedItems)
             .filter(([key, value]) => value.checked && key.startsWith('option') && typeof value === 'object')
             .map(([key, value]) => value.label);
-    
+
         setSelectedOptions(options);
         console.log(options);
     }, []);
@@ -72,8 +74,30 @@ function Produto() {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/pedidos/salvar-pedidos', data);
+            const response = await axios.post('http://localhost:8080/pedidos', data);
             console.log('Pedido enviado:', response.data);
+
+            Swal.fire({
+                title: "Deseja finalizar pedido, ou fazer outro?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Finalizar",
+                denyButtonText: "Outro pedido"
+              }).then(async (result) => {
+                if (result.isConfirmed) {
+                  const response = await axios.post('http://localhost:8080/pedidos/salvar-pedidos', data);
+                  if (response.status === 201) {
+                    Swal.fire("Pedido finalizado!", "", "success");
+                    console.log('Pedido enviado:', response.data);
+                    Navigation('/pagamento');
+                  } else {
+                    Swal.fire("Erro ao finalizar pedido", "", "error");
+                  }
+                } else if (result.isDenied) {
+                    Navigation('/entrega'); 
+                }
+              });              
+
         } catch (error) {
             console.error('Erro ao enviar pedido:', error);
         }
