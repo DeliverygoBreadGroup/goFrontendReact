@@ -14,10 +14,12 @@ function Produto() {
 
     useEffect(() => {
         const selectedItems = JSON.parse(sessionStorage.getItem('selectedInputs'));
-        const selectedOptions = Object.entries(selectedItems)
+        const options = Object.entries(selectedItems)
             .filter(([key, value]) => value.checked && key.startsWith('option') && typeof value === 'object')
             .map(([key, value]) => value.label);
-            console.log(selectedOptions);
+    
+        setSelectedOptions(options);
+        console.log(options);
     }, []);
 
     const [itensPadaria, setItensPadaria] = useState([]);
@@ -70,7 +72,7 @@ function Produto() {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/pedidos', data);
+            const response = await axios.post('http://localhost:8080/pedidos/salvar-pedidos', data);
             console.log('Pedido enviado:', response.data);
         } catch (error) {
             console.error('Erro ao enviar pedido:', error);
