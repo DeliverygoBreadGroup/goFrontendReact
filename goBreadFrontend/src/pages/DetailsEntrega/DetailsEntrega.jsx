@@ -67,7 +67,7 @@ function DetailsEntrega() {
                             <div className="info-content">
                                 <div className="circle-content">
                                     <div className="circle">
-                                        <Link to="/produto"><img src={iconBack} alt="" /></Link>
+                                        <Link to="/padaria"><img src={iconBack} alt="" /></Link>
                                     </div>
                                 </div>
 

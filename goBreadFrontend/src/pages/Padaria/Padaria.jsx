@@ -31,8 +31,9 @@ function Padaria() {
           });
         }
       }, []);
-      
 
+      const valorDaSession = sessionStorage.getItem('bairro');
+      
     return (
         <>
             <main>
@@ -61,7 +62,7 @@ function Padaria() {
 
                                     <div className="title-content">
                                         <h1>Padarias perto de mim:</h1>
-                                        <p>Resultado para <b>Cidade Jardim, SP</b></p>
+                                        <p>Resultado para bairro, <b>{valorDaSession}</b></p>
                                     </div>
                                 </div>
 

@@ -7,11 +7,85 @@ import sair from '../../assets/Icons/sair.svg';
 import lampada from '../../assets/Icons/lampada.svg';
 import editarPedido from '../../assets/Icons/editarPedido.svg';
 import deletar from '../../assets/Icons/deletar.svg';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function PortalCliente() {
-
     const history = useNavigate();
+
+    const [cliente, setCliente] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchCliente() {
+            try {
+                const idCliente = sessionStorage.getItem('id');
+                const response = await axios.get(`http://localhost:8080/clientes/${idCliente}`);
+                setCliente(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Erro ao buscar informações do cliente:', error);
+            }
+        }
+
+        fetchCliente();
+    }, []);
+
+    async function handleDeletePedido(pedidoId) {
+        try {
+            await axios.delete(`http://localhost:8080/pedidos/${pedidoId}`);
+            setCliente(prevCliente => ({
+                ...prevCliente,
+                pedidos: prevCliente.pedidos.filter(pedido => pedido.id !== pedidoId)
+            }));
+        } catch (error) {
+            console.error('Erro ao excluir pedido:', error);
+        }
+    }
+
+    function renderTable() {
+        if (loading) {
+            return <p>Carregando...</p>;
+        }
+
+        if (!cliente) {
+            return <p>Nenhum cliente encontrado.</p>;
+        }
+
+        return (
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº Pedido</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Padaria</th>
+                        <th>Status</th>
+                        <th>Deletar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {cliente.pedidos.map((pedido, indexPedido) => (
+                        pedido.itensPedido.map((item, indexItem) => (
+                            <tr key={`${pedido.id}-${indexItem}`}>
+                                <td>{pedido.id}</td>
+                                <td>{item.produto.nome}</td>
+                                <td>{item.quantidade}</td>
+                                <td>{pedido.comercio.razaoSocial}</td>
+                                <td>Entregue</td>
+                                <td>
+                                    <button className="btn-deletar" onClick={() => handleDeletePedido(pedido.id)}><img src={deletar} alt="" /></button>
+                                </td>
+                            </tr>
+                        ))
+                    ))}
+                </tbody>
+            </table>
+        );
+    }
+
     return (
         <>
             <header className='navbar-all-father'>
@@ -65,24 +139,7 @@ function PortalCliente() {
                 <section className="container-table">
                     <div className="container">
                         <div className="table">
-                            <table>
-                                <tr>
-                                    <th>Pedido</th>
-                                    <th>Quantidade</th>
-                                    <th>Preço</th>
-                                    <th>Plano</th>
-                                    <th>Status</th>
-                                </tr>
-                                <tr>
-                                    <td data-cell="pedido">N* do Pedido</td>
-                                    <td data-cell="iten">5 itens</td>
-                                    <td data-cell="preco">R$</td>
-                                    <td data-cell="assinatura">Family</td>
-                                    <td data-cell="status">Entregue</td>
-                                    <td><button className='btn-editar'><img src={editarPedido} alt="" /></button></td>
-                                    <td><button className="btn-deletar"><img src={deletar} alt="" /></button></td>
-                                </tr>
-                            </table>
+                            {renderTable()}
                         </div>
                     </div>
                 </section>

@@ -1,9 +1,9 @@
 import './ProdutoComerciante.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { Link } from 'react-router-dom';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 function ProdutoComerciante() {
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -26,6 +26,16 @@ function ProdutoComerciante() {
         try {
             const response = await axios.post('http://localhost:8080/itens-comercio', postData);
             console.log('Resposta da chamada POST:', response.data);
+            toast.success("Itens cadastrados!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            })
         } catch (error) {
             console.error('Erro na chamada POST:', error);
         }
@@ -33,6 +43,7 @@ function ProdutoComerciante() {
 
     return (
         <>
+         <ToastContainer />
             <section className='container-check'>
                 <div className="container">
                     <div className="alinharNoMeio">
