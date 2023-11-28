@@ -36,6 +36,24 @@
     cursor: pointer;
 }
 
+.menu-interaction .btn-access2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--cor-white);
+    border: 1.5px solid var(--cor-sub-letra);
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline 3px var(--cor-principal);
+}
+
+.menu-interaction .btn-access2 img{
+    width: 15%;
+}
+
 .cards-info{
     width: 100%;
     display: flex;

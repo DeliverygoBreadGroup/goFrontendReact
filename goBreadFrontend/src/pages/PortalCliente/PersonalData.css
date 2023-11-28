@@ -8,7 +8,6 @@
 
 .content-menu-access{
     width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,7 +38,7 @@
 
 .father-user-info{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
 }
@@ -47,6 +46,7 @@
 .user-info-container{
     width: 100%;
     display: flex;
+    background-color: #3d57ff;
     align-items: center;
     justify-content: center;
 }

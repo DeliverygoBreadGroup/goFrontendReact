@@ -3,6 +3,7 @@ import './PortalCliente.css';
 import products from '../../assets/Icons/products.svg';
 import editar from '../../assets/Icons/editar.svg';
 import perfilCliente from '../../assets/Icons/perfilCliente.svg';
+import comprarMais from '../../assets/Icons/comprar.svg'
 import sair from '../../assets/Icons/sair.svg';
 import lampada from '../../assets/Icons/lampada.svg';
 import editarPedido from '../../assets/Icons/editarPedido.svg';
@@ -10,6 +11,7 @@ import deletar from '../../assets/Icons/deletar.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 function PortalCliente() {
     const history = useNavigate();
@@ -35,15 +37,54 @@ function PortalCliente() {
 
     async function handleDeletePedido(pedidoId) {
         try {
-            await axios.delete(`http://localhost:8080/pedidos/${pedidoId}`);
-            setCliente(prevCliente => ({
-                ...prevCliente,
-                pedidos: prevCliente.pedidos.filter(pedido => pedido.id !== pedidoId)
-            }));
+            const confirmed = await showConfirmation();
+            if (confirmed) {
+                await axios.delete(`http://localhost:8080/pedidos/${pedidoId}`);
+                setCliente(prevCliente => ({
+                    ...prevCliente,
+                    pedidos: prevCliente.pedidos.filter(pedido => pedido.id !== pedidoId)
+                }));
+    
+                const revertConfirmed = await showRevertConfirmation();
+                if (revertConfirmed) {
+                    await axios.post(`http://localhost:8080/pedidos/reverter-delete`, { pedidoId });
+                    window.location.reload();
+                }
+            }
         } catch (error) {
             console.error('Erro ao excluir pedido:', error);
         }
     }
+    
+    const showConfirmation = async () => {
+        const result = await Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Você está prestes a excluir este pedido.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, excluir!',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6'
+        });
+    
+        return result.isConfirmed;
+    };
+    
+    const showRevertConfirmation = async () => {
+        const revertResult = await Swal.fire({
+            title: 'Deseja reverter o delete?',
+            text: 'Esta ação não poderá ser desfeita.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, reverter!',
+            cancelButtonText: 'Cancelar'
+        });
+    
+        return revertResult.isConfirmed;
+    };
 
     function renderTable() {
         if (loading) {
@@ -61,8 +102,9 @@ function PortalCliente() {
                         <th>Nº Pedido</th>
                         <th>Produto</th>
                         <th>Quantidade</th>
+                        <th>Dia da Entrega</th>
+                        <th>Horário</th>
                         <th>Padaria</th>
-                        <th>Status</th>
                         <th>Deletar</th>
                     </tr>
                 </thead>
@@ -73,8 +115,9 @@ function PortalCliente() {
                                 <td>{pedido.id}</td>
                                 <td>{item.produto.nome}</td>
                                 <td>{item.quantidade}</td>
+                                <td>{pedido.diaEntrega}</td>
+                                <td>{pedido.horarioEntrega}</td>
                                 <td>{pedido.comercio.razaoSocial}</td>
-                                <td>Entregue</td>
                                 <td>
                                     <button className="btn-deletar" onClick={() => handleDeletePedido(pedido.id)}><img src={deletar} alt="" /></button>
                                 </td>
@@ -95,6 +138,7 @@ function PortalCliente() {
                             <button className='btn-access'><img src={products} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/editarAssinatura')}><img src={editar} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/dados')}><img src={perfilCliente} alt="" /></button>
+                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" />COMPRAR+</button>
                             <button className='btn-access' onClick={() => history('/')}><img src={sair} alt="" /></button>
                         </div>
                     </div>
@@ -108,27 +152,21 @@ function PortalCliente() {
                             <div className="content-cardInfo">
                                 <img src={lampada} alt="" />
                                 <div className="contentTitleInfo">
-                                    <h2>Prezado cliente, informamos que<br></br>
-                                        em sua assinatura é apenas<br></br>
-                                        um pedido por dia.</h2>
+                                    <h2>Revise seu histórico de compras, acompanhe detalhes de pedidos anteriores.</h2>
                                     <p>Aproveite.</p>
                                 </div>
                             </div>
                             <div className="content-cardInfo">
                                 <img src={lampada} alt="" />
                                 <div className="contentTitleInfo">
-                                    <h2>Prezado cliente, informamos que<br></br>
-                                        em sua assinatura é apenas<br></br>
-                                        um pedido por dia.</h2>
+                                    <h2>Gerencie seus pedidos, atualize suas informações, e tenha controle total do seu histórico.</h2>
                                     <p>Aproveite.</p>
                                 </div>
                             </div>
                             <div className="content-cardInfo">
                                 <img src={lampada} alt="" />
                                 <div className="contentTitleInfo">
-                                    <h2>Prezado cliente, informamos que<br></br>
-                                        em sua assinatura é apenas<br></br>
-                                        um pedido por dia.</h2>
+                                    <h2>Faça pedidos com facilidade. Realize compras recorrentes ou adquira novos produtos.</h2>
                                     <p>Aproveite.</p>
                                 </div>
                             </div>
