@@ -52,11 +52,11 @@ function DetailsEntrega() {
     return (
         <>
             <section className="parent-container">
-                <div className="left-container">
-                    <div className="navbar-content">
+                <div className="left-container2">
+                    <div className="navbar-content2">
                         <img src={logoWhite} alt="logo" className="logo" />
                     </div>
-                    <div className="image-content">
+                    <div className="image-content2">
                         <img src={imageEntrega} alt="" />
                     </div>
                 </div>

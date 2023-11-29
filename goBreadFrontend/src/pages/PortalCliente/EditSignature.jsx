@@ -39,7 +39,7 @@ function EditSignature() {
 
     return (
         <>
-        <ToastContainer />
+            <ToastContainer />
             <header className='navbar-all-father'>
                 <div className="container">
                     <div className='content-menu-access'>
@@ -54,40 +54,54 @@ function EditSignature() {
                 </div>
             </header>
 
-            <main className='father-user-info'>
-                <section className='user-info-container'>
-                    <div className='user-info-form'>
-                        <div class="grid-wrapper grid-col-auto">
-                            <label for="radio-card-1" class="radio-card">
-                                <input type="radio" name="radio-card" id="radio-card-1" value="basic" checked={tipoAssinatura === 'basic'} onChange={(e) => setTipoAssinatura(e.target.value)} />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4>BASIC</h4>
-                                        <h5>Menor capacidade de quantidades.</h5>
-                                        <h3>R$ 79,90/ mês</h3>
-                                    </div>
-                                </div>
-                            </label>
-
-                            <label for="radio-card-2" class="radio-card">
-                                <input type="radio" name="radio-card" id="radio-card-2" value="family" checked={tipoAssinatura === 'family'} onChange={(e) => setTipoAssinatura(e.target.value)}  />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4>FAMILY</h4>
-                                        <h5>Ampla capacidade de quantidades.</h5>
-                                        <h3>R$ 129,90/ mês</h3>
-                                    </div>
-                                </div>
-                            </label>
+            <main className='father-user-info-assinatura'>
+                <section className='user-info-container-assinatura'>
+                    <div className="left-assinatura">
+                        <h1>Você tem a flexibilidade de modificar sua assinatura a qualquer momento.</h1>
+                        <div className="title-pequenos">
+                            <p>Manter-se atualizado é fundamental.</p>
                         </div>
-                        <div class="containerAvanced">
+                        <div className="title-pequenos">
+                            <p>A modificação da assinatura é simples e pode ser feita por aqui.</p>
+                        </div>
+                        <div className="title-pequenos">
+                            <p>Estamos comprometidos em fornecer uma experiência flexível e conveniente.</p>
+                        </div>
+                    </div>
+                    <div className='user-info-form-assinatura'>
+                        <div className="center-assinatira">
+                            <div class="grid-wrapper grid-col-auto grid-assinatura">
+                                <label for="radio-card-1" class="radio-card">
+                                    <input type="radio" name="radio-card" id="radio-card-1" value="basic" checked={tipoAssinatura === 'basic'} onChange={(e) => setTipoAssinatura(e.target.value)} />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4>BASIC</h4>
+                                            <h5>Menor capacidade de quantidades.</h5>
+                                            <h3>R$ 79,90/ mês</h3>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label for="radio-card-2" class="radio-card">
+                                    <input type="radio" name="radio-card" id="radio-card-2" value="family" checked={tipoAssinatura === 'family'} onChange={(e) => setTipoAssinatura(e.target.value)} />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4>FAMILY</h4>
+                                            <h5>Ampla capacidade de quantidades.</h5>
+                                            <h3>R$ 129,90/ mês</h3>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="containerAvanced-assinatura">
                                 <div class="contentBtn" onClick={handleEnviar}>
                                     <p>Atualizar</p>
                                     <img src={setaDireita} alt="" />
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </section>
             </main>

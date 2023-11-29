@@ -38,14 +38,14 @@ function Padaria() {
         <>
             <main>
                 <section className="pai">
-                    <div className="left-container">
-                        <div className="navbar-content">
+                    <div className="left-container2">
+                        <div className="navbar-content2">
                             <img src={logoWhite} alt="logo" className="logo" />
                         </div>
                         <div className="contentTitle">
                             <h1>É HORA DE ESCOLHER<br></br> SUA <span>PADARIA</span>.</h1>
                         </div>
-                        <div className="image-content">
+                        <div className="image-content2">
                             <img src={imageEntrega} alt="" />
                         </div>
                     </div>

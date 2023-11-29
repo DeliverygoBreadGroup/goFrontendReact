@@ -89,6 +89,8 @@ function PersonalData() {
             <main className='father-user-info'>
                 <section className='user-info-container'>
                     <div className='user-info-form'>
+                    <h1>Minhas informações</h1>
+                        <label htmlFor="cpf">CPF</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -98,6 +100,7 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                        <label htmlFor="nome">Nome</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -107,6 +110,7 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                        <label htmlFor="email">Email</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -116,6 +120,7 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                        <label htmlFor="telefone">Telefone</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -125,7 +130,27 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                        <input
+                        <div className="user-actions">
+                            {!editMode ? (
+                                <button className='btn-actions-editar' onClick={handleEdit}>
+                                    Editar
+                                </button>
+                            ) : (
+                                <>
+                                    <button className='btn-actions-salvar' onClick={handleSave}>
+                                        Salvar
+                                    </button>
+                                    <button className='btn-actions-cancelar' onClick={() => setEditMode(false)}>
+                                        Cancelar
+                                    </button>
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="user-info-form2">
+                    <label htmlFor="tipo">Tipo de cliente</label>
+                    <input
                             className="ipt-info-user"
                             type="text"
                             placeholder='Tipo'
@@ -134,6 +159,7 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                        <label htmlFor="cep">Endereço</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -143,6 +169,7 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                        <label htmlFor="numero">Número</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -152,6 +179,7 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                        <label htmlFor="complemento">Complemento</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -160,23 +188,7 @@ function PersonalData() {
                             value={clienteData.endereco.complemento}
                             disabled={!editMode}
                             onChange={handleInputChange}
-                        />
-                        <div className="user-actions">
-                            {!editMode ? (
-                                <button className='btn-actions' onClick={handleEdit}>
-                                    Editar
-                                </button>
-                            ) : (
-                                <>
-                                    <button className='btn-actions2' onClick={handleSave}>
-                                        Salvar
-                                    </button>
-                                    <button className='btn-actions' onClick={() => setEditMode(false)}>
-                                        Cancelar
-                                    </button>
-                                </>
-                            )}
-                        </div>
+                        />  
                     </div>
                 </section>
             </main>
