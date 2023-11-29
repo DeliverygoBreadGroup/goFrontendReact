@@ -47,7 +47,7 @@ function EditSignature() {
                             <button className='btn-access' onClick={() => history('/portalCliente')}><img src={products} alt="" /></button>
                             <button className='btn-access'><img src={editar} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/dados')}><img src={perfilCliente} alt="" /></button>
-                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" />COMPRAR+</button>
+                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/')}><img src={sair} alt="" /></button>
                         </div>
                     </div>

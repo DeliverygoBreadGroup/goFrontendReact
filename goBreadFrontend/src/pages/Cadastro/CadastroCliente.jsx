@@ -113,8 +113,6 @@ function CadastroCliente() {
             .then((response) => {
                 if (response.status == 201 && response.data?.id) {
                     sessionStorage.setItem('id', response.data.id);
-                    sessionStorage.setItem('senhaUsuario', response.senha);
-                    sessionStorage.setItem('cpfUsuario', response.cpf);
                     sessionStorage.setItem('bairro', response.data.endereco.bairro);
                     console.log(response);
                     console.log(formData);

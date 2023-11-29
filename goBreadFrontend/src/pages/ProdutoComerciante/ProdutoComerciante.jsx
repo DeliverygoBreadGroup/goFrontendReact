@@ -36,6 +36,10 @@ function ProdutoComerciante() {
                 progress: undefined,
                 theme: "light",
             })
+
+            setTimeout(() => {
+                history('/portalComerciante');
+            }, 1000);
         } catch (error) {
             console.error('Erro na chamada POST:', error);
         }

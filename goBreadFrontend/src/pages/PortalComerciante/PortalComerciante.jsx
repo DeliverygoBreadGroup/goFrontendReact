@@ -1,38 +1,36 @@
 import '../../styles/StyleGlobal/style-global.css';
-import './PortalCliente.css';
+import './PortalComerciante.css';
 import products from '../../assets/Icons/products.svg';
-import editar from '../../assets/Icons/editar.svg';
+import relatorio from '../../assets/Icons/relatorio-de-lucro 1.svg';
 import perfilCliente from '../../assets/Icons/perfilCliente.svg';
-import comprarMais from '../../assets/Icons/comprar.svg'
+import deletarUsuario from '../../assets/Icons/deletar-usuario 1.jpg';
 import sair from '../../assets/Icons/sair.svg';
 import lampada from '../../assets/Icons/lampada.svg';
-import editarPedido from '../../assets/Icons/editarPedido.svg';
-import deletar from '../../assets/Icons/deletar.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
-function PortalCliente() {
+function PortalComerciante() {
     const history = useNavigate();
 
-    const [cliente, setCliente] = useState(null);
+    const [comercioData, setComercioData] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function fetchCliente() {
+        async function fetchComercioData() {
             try {
-                const idCliente = sessionStorage.getItem('id');
-                const response = await axios.get(`http://localhost:8080/clientes/${idCliente}`);
-                setCliente(response.data);
+                const idPadaria = sessionStorage.getItem('selectedPadariaId');
+                const response = await axios.get(`http://localhost:8080/comercios/${idPadaria}`);
+                setComercioData(response.data);
                 setLoading(false);
             } catch (error) {
-                console.error('Erro ao buscar informações do cliente:', error);
+                console.error('Erro ao buscar informações do comércio:', error);
             }
         }
 
-        fetchCliente();
+        fetchComercioData();
     }, []);
 
     async function handleDeletePedido(pedidoId) {
@@ -44,7 +42,7 @@ function PortalCliente() {
                     ...prevCliente,
                     pedidos: prevCliente.pedidos.filter(pedido => pedido.id !== pedidoId)
                 }));
-    
+
                 const revertConfirmed = await showRevertConfirmation();
                 if (revertConfirmed) {
                     await axios.post(`http://localhost:8080/pedidos/reverter-delete`, { pedidoId });
@@ -55,7 +53,7 @@ function PortalCliente() {
             console.error('Erro ao excluir pedido:', error);
         }
     }
-    
+
     const showConfirmation = async () => {
         const result = await Swal.fire({
             title: 'Tem certeza?',
@@ -67,10 +65,10 @@ function PortalCliente() {
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6'
         });
-    
+
         return result.isConfirmed;
     };
-    
+
     const showRevertConfirmation = async () => {
         const revertResult = await Swal.fire({
             title: 'Deseja reverter o delete?',
@@ -82,17 +80,13 @@ function PortalCliente() {
             confirmButtonText: 'Sim, reverter!',
             cancelButtonText: 'Cancelar'
         });
-    
+
         return revertResult.isConfirmed;
     };
 
     function renderTable() {
         if (loading) {
             return <p>Carregando...</p>;
-        }
-
-        if (!cliente) {
-            return <p>Nenhum cliente encontrado.</p>;
         }
 
         return (
@@ -102,25 +96,25 @@ function PortalCliente() {
                         <th>Nº Pedido</th>
                         <th>Produto</th>
                         <th>Quantidade</th>
-                        <th>Dia da Entrega</th>
-                        <th>Horário</th>
-                        <th>Padaria</th>
-                        <th>Deletar</th>
+                        <th>Cliente</th>
+                        <th>Telefone</th>
+                        <th>Endereço Cliente</th>
+                        <th>Complemento</th>
+                        <th>CEP</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {cliente.pedidos.map((pedido, indexPedido) => (
+                {comercioData.pedidos.map((pedido, indexPedido) => (
                         pedido.itensPedido.map((item, indexItem) => (
                             <tr key={`${pedido.id}-${indexItem}`}>
                                 <td>{pedido.id}</td>
                                 <td>{item.produto.nome}</td>
                                 <td>{item.quantidade}</td>
-                                <td>{pedido.diaEntrega}</td>
-                                <td>{pedido.horarioEntrega}</td>
-                                <td>{pedido.comercio.razaoSocial}</td>
-                                <td>
-                                    <button className="btn-deletar" onClick={() => handleDeletePedido(pedido.id)}><img src={deletar} alt="" /></button>
-                                </td>
+                                <td>{pedido.cliente.nome}</td>
+                                <td>{pedido.cliente.telefone}</td>
+                                <td>{pedido.cliente.endereco.rua}, {pedido.cliente.endereco.numero} - {pedido.cliente.endereco.bairro}</td>
+                                <td>{pedido.cliente.endereco.complemento}</td>
+                                <td>{pedido.cliente.endereco.cep}</td>
                             </tr>
                         ))
                     ))}
@@ -136,9 +130,8 @@ function PortalCliente() {
                     <div className='content-menu-access'>
                         <div className="menu-interaction">
                             <button className='btn-access'><img src={products} alt="" /></button>
-                            <button className='btn-access' onClick={() => history('/editarAssinatura')}><img src={editar} alt="" /></button>
-                            <button className='btn-access' onClick={() => history('/dados')}><img src={perfilCliente} alt="" /></button>
-                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/relatorios')}><img src={relatorio} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/dadosComerciante')}><img src={perfilCliente} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/')}><img src={sair} alt="" /></button>
                         </div>
                     </div>
@@ -186,4 +179,4 @@ function PortalCliente() {
     )
 }
 
-export default PortalCliente;
+export default PortalComerciante;

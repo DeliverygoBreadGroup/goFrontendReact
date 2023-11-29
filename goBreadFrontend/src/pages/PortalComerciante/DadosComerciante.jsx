@@ -1,9 +1,9 @@
 import '../../styles/StyleGlobal/style-global.css';
-import './PersonalData.css';
+import './DadosComerciante.css';
 import products from '../../assets/Icons/products.svg';
-import editar from '../../assets/Icons/editar.svg';
+import relatorio from '../../assets/Icons/relatorio-de-lucro 1.svg';
 import perfilCliente from '../../assets/Icons/perfilCliente.svg';
-import comprarMais from '../../assets/Icons/comprar.svg';
+import deletarUsuario from '../../assets/Icons/deletar-usuario 1.jpg';
 import sair from '../../assets/Icons/sair.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -11,15 +11,16 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function PersonalData() {
+function DadosComerciante() {
 
     const history = useNavigate();
 
-    const [clienteData, setClienteData] = useState({
-        nome: '',
-        cpf: '',
-        telefone: '',
+    const [comercianteData, setComercianteData] = useState({
+        razaoSocial: '',
+        responsavel: '',
+        cnpj: '',
         email: '',
+        telefone: '',
         tipo: '',
         endereco: {
             cep: '',
@@ -31,18 +32,18 @@ function PersonalData() {
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
-        async function fetchClienteData() {
+        async function fetchComercianteData() {
             try {
-                const idCliente = sessionStorage.getItem('id');
-                const response = await axios.get(`http://localhost:8080/clientes/${idCliente}`);
-                setClienteData(response.data);
+                const idPadaria = sessionStorage.getItem('selectedPadariaId');
+                const response = await axios.get(`http://localhost:8080/comercios/${idPadaria}`);
+                setComercianteData(response.data);
                 console.log(response);
             } catch (error) {
                 console.error('Erro ao buscar informações do cliente:', error);
             }
         }
 
-        fetchClienteData();
+        fetchComercianteData();
     }, []);
 
     const handleEdit = () => {
@@ -51,8 +52,8 @@ function PersonalData() {
 
     const handleSave = async () => {
         try {
-            const idCliente = sessionStorage.getItem('id');
-            await axios.put(`http://localhost:8080/clientes/${idCliente}`, clienteData);
+            const idPadaria = sessionStorage.getItem('selectedPadariaId');
+            await axios.put(`http://localhost:8080/comercios/${idPadaria}`, comercianteData);
             toast.success('Informações atualizadas com sucesso!');
             setEditMode(false);
         } catch (error) {
@@ -63,8 +64,8 @@ function PersonalData() {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setClienteData({
-            ...clienteData,
+        setComercianteData({
+            ...comercianteData,
             [name]: value,
         });
     };
@@ -76,10 +77,9 @@ function PersonalData() {
                 <div className="container">
                     <div className='content-menu-access'>
                         <div className="menu-interaction">
-                            <button className='btn-access' onClick={() => history('/portalCliente')}><img src={products} alt="" /></button>
-                            <button className='btn-access' onClick={() => history('/editarAssinatura')}><img src={editar} alt="" /></button>
-                            <button className='btn-access'><img src={perfilCliente} alt="" /></button>
-                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/portalComerciante')}><img src={products} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/relatorios')}><img src={relatorio} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/dadosComerciante')}><img src={perfilCliente} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/')}><img src={sair} alt="" /></button>
                         </div>
                     </div>
@@ -89,99 +89,121 @@ function PersonalData() {
             <main className='father-user-info'>
                 <section className='user-info-container'>
                     <div className='user-info-form'>
+                        <h1>Minhas informações</h1>
+                        <label htmlFor="razaoSocial">Nome Padaria</label>
                         <input
                             className="ipt-info-user"
                             type="text"
-                            placeholder='CPF'
-                            name='cpf'
-                            value={clienteData.cpf}
+                            placeholder='Razão Social'
+                            name='razaoSocial'
+                            value={comercianteData.razaoSocial}
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                         <label htmlFor="razaoSocial">Responsável</label>
                         <input
                             className="ipt-info-user"
                             type="text"
-                            placeholder='Nome'
-                            name='nome'
-                            value={clienteData.nome}
+                            placeholder='Responsável'
+                            name='responsavel'
+                            value={comercianteData.responsavel}
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
+                         <label htmlFor="razaoSocial">CNPJ</label>
+                        <input
+                            className="ipt-info-user"
+                            type="text"
+                            placeholder='CNPJ'
+                            name='cnpj'
+                            value={comercianteData.cnpj}
+                            disabled={!editMode}
+                            onChange={handleInputChange}
+                        />
+                         <label htmlFor="razaoSocial">Email</label>
                         <input
                             className="ipt-info-user"
                             type="text"
                             placeholder='Email'
                             name='email'
-                            value={clienteData.email}
-                            disabled={!editMode}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            className="ipt-info-user"
-                            type="text"
-                            placeholder='Telefone'
-                            name='telefone'
-                            value={clienteData.telefone}
-                            disabled={!editMode}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            className="ipt-info-user"
-                            type="text"
-                            placeholder='Tipo'
-                            name='tipo'
-                            value={clienteData.tipo}
-                            disabled={!editMode}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            className="ipt-info-user"
-                            type="text"
-                            placeholder='CEP'
-                            name='cep'
-                            value={clienteData.endereco.cep}
-                            disabled={!editMode}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            className="ipt-info-user"
-                            type="text"
-                            placeholder='Número'
-                            name='numero'
-                            value={clienteData.endereco.numero}
-                            disabled={!editMode}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            className="ipt-info-user"
-                            type="text"
-                            placeholder='Complemento'
-                            name='complemento'
-                            value={clienteData.endereco.complemento}
+                            value={comercianteData.email}
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
                         <div className="user-actions">
                             {!editMode ? (
-                                <button className='btn-actions' onClick={handleEdit}>
+                                <button className='btn-actions-editar' onClick={handleEdit}>
                                     Editar
                                 </button>
                             ) : (
                                 <>
-                                    <button className='btn-actions2' onClick={handleSave}>
+                                    <button className='btn-actions-salvar' onClick={handleSave}>
                                         Salvar
                                     </button>
-                                    <button className='btn-actions' onClick={() => setEditMode(false)}>
+                                    <button className='btn-actions-cancelar' onClick={() => setEditMode(false)}>
                                         Cancelar
                                     </button>
                                 </>
                             )}
                         </div>
                     </div>
+
+                    <div className="endereco">
+                    <label htmlFor="razaoSocial">Telefone</label>
+                          <input
+                            className="ipt-info-user"
+                            type="text"
+                            placeholder='Telefone'
+                            name='telefone'
+                            value={comercianteData.telefone}
+                            disabled={!editMode}
+                            onChange={handleInputChange}
+                        />
+                         <label htmlFor="razaoSocial">Tipo de cliente</label>
+                        <input
+                            className="ipt-info-user"
+                            type="text"
+                            placeholder='Tipo'
+                            name='tipo'
+                            value={comercianteData.tipo}
+                            disabled={!editMode}
+                            onChange={handleInputChange}
+                        />
+                    <label htmlFor="razaoSocial">CEP</label>
+                        <input
+                            className="ipt-info-user"
+                            type="text"
+                            placeholder='CEP'
+                            name='cep'
+                            value={comercianteData.endereco.cep}
+                            disabled={!editMode}
+                            onChange={handleInputChange}
+                        />
+                         <label htmlFor="razaoSocial">Endereço</label>
+                        <input
+                            className="ipt-info-user"
+                            type="text"
+                            placeholder='Número'
+                            name='numero'
+                            value={comercianteData.endereco.numero}
+                            disabled={!editMode}
+                            onChange={handleInputChange}
+                        />
+                         <label htmlFor="razaoSocial">Complemento</label>
+                        <input
+                            className="ipt-info-user"
+                            type="text"
+                            placeholder='Complemento'
+                            name='complemento'
+                            value={comercianteData.endereco.complemento}
+                            disabled={!editMode}
+                            onChange={handleInputChange}
+                        />
+                        </div>
                 </section>
             </main>
         </>
     )
 }
 
-export default PersonalData;
+export default DadosComerciante;
