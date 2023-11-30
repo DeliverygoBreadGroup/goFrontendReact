@@ -147,4 +147,42 @@
     width: 10%;
 }
 
+.content-file button{
+    padding: 20px 45px;
+    border: none;
+    background-color: var(--cor-white);
+    color: var(--cor-black);
+    border: 1px solid var(--cor-black);
+    font-size: 0.8rem;
+    font-weight: 400;
+    border-radius: 50px;
+    transition: 0.5s;
+    cursor: pointer;
+}
 
+input[type='file'] {
+    display: none;
+  }
+  
+  
+  .custom-upload-button {
+    padding: 20px 50px;
+    background-color: var(--cor-principal);
+    color: white;
+    font-weight: 300;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+ 
+  .custom-upload-button:hover {
+    background-color: var(--cor-white);
+    border: 1px solid var(--cor-principal);
+    color: var(--cor-principal);
+    font-weight: 400;
+    border-radius: 0;
+  }
+
+  .p-arquivo-anexado{
+    font-size: 12px;
+  }

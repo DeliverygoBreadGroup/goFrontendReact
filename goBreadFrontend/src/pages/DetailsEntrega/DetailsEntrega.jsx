@@ -185,7 +185,7 @@ function DetailsEntrega() {
                                 </div>
                             </div>
 
-                            <div className="advanced-container">
+                            <div className="advanced-container2">
                                 <Link to={`/produto?${buildURLParams()}`}><div className="button-content">
                                     <p>Avançar</p>
                                     <img src={setaDireita} alt="" />

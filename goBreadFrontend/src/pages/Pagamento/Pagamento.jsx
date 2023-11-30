@@ -80,7 +80,7 @@ function Pagamento() {
                                 </div>
                             </div>
 
-                            <div className="advanced-container">
+                            <div className="advanced-container2">
                             <Link to="/portalCliente"><div className="button-content">
                                     <p>Avançar</p>
                                     <img src={setaDireita} alt="" />

@@ -15,9 +15,11 @@ function Arquivo() {
 
     const history = useNavigate();
     const [selectedFile, setSelectedFile] = useState(null);
+    const [fileAttached, setFileAttached] = useState(false);
 
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
+        setFileAttached(true);
     };
 
     const handleDownload = async () => {
@@ -46,29 +48,29 @@ function Arquivo() {
 
     const handleUpload = async () => {
         try {
-          const idComercio = sessionStorage.getItem('selectedPadariaId');
-          const formData = new FormData();
-          formData.append('file', selectedFile);
-    
-          await axios.post(`http://localhost:8080/comercios/upload/clientes-txt/${idComercio}`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-    
-          Swal.fire({
-            icon: 'success',
-            title: 'Upload realizado com sucesso!',
-          });
+            //   const idComercio = sessionStorage.getItem('selectedPadariaId');
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            await axios.post('http://localhost:8080/comercios/upload/produtos-txt', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Upload realizado com sucesso!',
+            });
         } catch (error) {
-          console.error('Erro ao fazer o upload do arquivo:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Erro ao fazer o upload do arquivo!',
-          });
+            console.error('Erro ao fazer o upload do arquivo:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Erro ao fazer o upload do arquivo!',
+            });
         }
-      };
+    };
 
     return (
         <>
@@ -99,7 +101,11 @@ function Arquivo() {
                         <div className="content-file">
                             <img src={upload} alt="" />
                             <h1>Faça o upload do relatório de clientes</h1>
-                            <input type="file" onChange={handleFileChange} />
+                            <label htmlFor="file-upload" className="custom-upload-button">
+                                <span>Escolha o arquivo</span>
+                                <input type="file" id="file-upload" onChange={handleFileChange} />
+                            </label>
+                            {fileAttached && <p className='p-arquivo-anexado'>Arquivo anexado!</p>}
                             <button onClick={handleUpload}>Enviar</button>
                         </div>
                     </div>

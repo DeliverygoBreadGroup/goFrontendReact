@@ -146,7 +146,7 @@ function Produto() {
                                         </div>
                                     </div>
 
-                                    <div className="advanced-container">
+                                    <div className="advanced-container2">
                                         <div className="button-content" onClick={enviarPedido}>
                                             <p>Avançar</p>
                                             <img src={setaDireita} alt="" />

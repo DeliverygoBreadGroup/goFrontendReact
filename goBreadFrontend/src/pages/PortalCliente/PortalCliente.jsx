@@ -3,7 +3,7 @@ import './PortalCliente.css';
 import products from '../../assets/Icons/products.svg';
 import editar from '../../assets/Icons/editar.svg';
 import perfilCliente from '../../assets/Icons/perfilCliente.svg';
-import comprarMais from '../../assets/Icons/comprar.svg'
+import comprarMais from '../../assets/Icons/adicionar-ao-carrinho 1.svg'
 import sair from '../../assets/Icons/sair.svg';
 import lampada from '../../assets/Icons/lampada.svg';
 import editarPedido from '../../assets/Icons/editarPedido.svg';
@@ -138,7 +138,7 @@ function PortalCliente() {
                             <button className='btn-access'><img src={products} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/editarAssinatura')}><img src={editar} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/dados')}><img src={perfilCliente} alt="" /></button>
-                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/')}><img src={sair} alt="" /></button>
                         </div>
                     </div>

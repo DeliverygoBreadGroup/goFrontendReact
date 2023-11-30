@@ -3,9 +3,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import setaDireita from '../../assets/Icons/setaDireita.svg';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 function ProdutoComerciante() {
+
+    const history = useNavigate();
+
     const [selectedProducts, setSelectedProducts] = useState([]);
 
     const handleCheckboxChange = (productId) => {

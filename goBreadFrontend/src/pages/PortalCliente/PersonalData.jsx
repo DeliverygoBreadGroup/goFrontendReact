@@ -3,7 +3,7 @@ import './PersonalData.css';
 import products from '../../assets/Icons/products.svg';
 import editar from '../../assets/Icons/editar.svg';
 import perfilCliente from '../../assets/Icons/perfilCliente.svg';
-import comprarMais from '../../assets/Icons/comprar.svg';
+import comprarMais from '../../assets/Icons/adicionar-ao-carrinho 1.svg';
 import sair from '../../assets/Icons/sair.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -79,7 +79,7 @@ function PersonalData() {
                             <button className='btn-access' onClick={() => history('/portalCliente')}><img src={products} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/editarAssinatura')}><img src={editar} alt="" /></button>
                             <button className='btn-access'><img src={perfilCliente} alt="" /></button>
-                            <button className='btn-access2' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
+                            <button className='btn-access' onClick={() => history('/padaria')}><img src={comprarMais} alt="" /></button>
                             <button className='btn-access' onClick={() => history('/')}><img src={sair} alt="" /></button>
                         </div>
                     </div>

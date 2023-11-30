@@ -34,7 +34,7 @@ function Home() {
                 </div>
             </main>
 
-            <section className="sectionVantagensHome">
+            <section className="sectionVantagensHome" id="como-funciona">
                 <div className="container containerVantagensHome">
                     <div className="tituloVantagensHome">
                         <h1 className="titulo">Como funciona</h1>
@@ -78,7 +78,7 @@ function Home() {
                 </div>
             </section>
 
-            <section className="sectionAssinaturas">
+            <section className="sectionAssinaturas" id="assinaturas">
                 <div className="container containerAssinaturas">
                     <div className="assinaturasTexto">
                         <h1 className="tituloAssinaturas">
@@ -95,7 +95,7 @@ function Home() {
                                 <h1>BASIC</h1>
                             </div>
                             <div className="assinaturaPreco">
-                                <h1>R$79,90 <span>/mês</span></h1>
+                                <h1>R$249,90 <span>/mês</span></h1>
                             </div>
                             <div className="assinaturaVantagens">
                                 <div className="individualVantagem">
@@ -131,7 +131,7 @@ function Home() {
                                 <h1>FAMILY</h1>
                             </div>
                             <div className="assinaturaPreco precoPro">
-                                <h1>R$129,90 <span>/ano</span></h1>
+                                <h1>R$299,90 <span>/mês</span></h1>
                             </div>
                             <div className="assinaturaVantagens">
                                 <div className="individualVantagem">

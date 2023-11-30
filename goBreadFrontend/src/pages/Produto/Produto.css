@@ -176,16 +176,6 @@
     font-size: 0.80rem;
 }
 
-.button-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    border-radius: 5px;
-    background-color: var(--cor-principal);
-}
-
-.button-content p {
-    color: var(--cor-white);
-    font-size: 0.80rem;
+.advanced-container2{
+    width: 100%;
 }
