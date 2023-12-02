@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function PersonalData() {
 
     const history = useNavigate();
-
+    
     const [clienteData, setClienteData] = useState({
         nome: '',
         cpf: '',
@@ -68,6 +68,16 @@ function PersonalData() {
             [name]: value,
         });
     };
+
+    const deletarConta = async () => {
+        try{
+            const idCliente = sessionStorage.getItem('id');
+            await axios.delete(`http://localhost:8080/clientes/${idCliente}`);
+            toast.success('Informações atualizadas com sucesso!');
+        } catch (error) {
+            console.error('Erro ao salvar as informações:', error);
+        }
+    }
 
     return (
         <>
@@ -189,6 +199,10 @@ function PersonalData() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />  
+
+                        <div className="user-actions">
+                            <button className='btn-actions-editar' onClick={deletarConta}>Deletar conta</button>
+                        </div>
                     </div>
                 </section>
             </main>

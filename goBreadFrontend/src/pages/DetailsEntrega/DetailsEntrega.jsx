@@ -25,17 +25,22 @@ function DetailsEntrega() {
 
     const handleInputChange = (event) => {
         const { name, checked } = event.target;
-        const label = event.target.nextSibling.textContent; // Obtém o texto do label
+        const label = event.target.nextSibling.textContent; 
         setCheckedItems({
             ...checkedItems,
             [name]: {
                 checked,
-                label // Armazena o estado do checkbox e o texto do label
+                label
             }
         });
     
         console.log(`${label}`);
     };
+
+    useEffect(() => {
+        const storedItems = JSON.parse(sessionStorage.getItem('selectedInputs'));
+        console.log(storedItems);
+    }, []);
 
     useEffect(() => {
         sessionStorage.setItem('selectedInputs', JSON.stringify(checkedItems));

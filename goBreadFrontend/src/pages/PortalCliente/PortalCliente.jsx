@@ -6,8 +6,8 @@ import perfilCliente from '../../assets/Icons/perfilCliente.svg';
 import comprarMais from '../../assets/Icons/adicionar-ao-carrinho 1.svg'
 import sair from '../../assets/Icons/sair.svg';
 import lampada from '../../assets/Icons/lampada.svg';
-import editarPedido from '../../assets/Icons/editarPedido.svg';
 import deletar from '../../assets/Icons/deletar.svg';
+import buttonBack from '../../assets/Icons/flecha 1.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -129,6 +129,34 @@ function PortalCliente() {
         );
     }
 
+    async function handleRevertAllDeleted() {
+        try {
+            const confirmed = await showRevertAllConfirmation();
+            if (confirmed) {
+                const deletedPedidoIds = cliente.pedidos.map(pedido => pedido.id);
+                await axios.post('http://localhost:8080/pedidos/reverter-delete', { deletedPedidoIds });
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Erro ao reverter pedidos:', error);
+        }
+    }
+
+    const showRevertAllConfirmation = async () => {
+        const revertAllResult = await Swal.fire({
+            title: 'Deseja reverter todos os pedidos deletados?',
+            text: 'Esta ação não poderá ser desfeita.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, reverter!',
+            cancelButtonText: 'Cancelar'
+        });
+
+        return revertAllResult.isConfirmed;
+    };
+
     return (
         <>
             <header className='navbar-all-father'>
@@ -171,6 +199,12 @@ function PortalCliente() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <section className="container-reverter-btn">
+                    <div className="container">
+                        <button onClick={handleRevertAllDeleted}><img src={buttonBack} alt="" /></button>
                     </div>
                 </section>
 

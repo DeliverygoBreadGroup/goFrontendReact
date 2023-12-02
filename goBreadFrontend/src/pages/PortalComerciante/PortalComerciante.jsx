@@ -99,6 +99,7 @@ function PortalComerciante() {
                         <th>Cliente</th>
                         <th>Telefone</th>
                         <th>Endereço Cliente</th>
+                        <th>Horário</th>
                         <th>Complemento</th>
                         <th>CEP</th>
                     </tr>
@@ -113,6 +114,7 @@ function PortalComerciante() {
                                 <td>{pedido.cliente.nome}</td>
                                 <td>{pedido.cliente.telefone}</td>
                                 <td>{pedido.cliente.endereco.rua}, {pedido.cliente.endereco.numero} - {pedido.cliente.endereco.bairro}</td>
+                                <td>{pedido.horarioEntrega}</td>
                                 <td>{pedido.cliente.endereco.complemento}</td>
                                 <td>{pedido.cliente.endereco.cep}</td>
                             </tr>

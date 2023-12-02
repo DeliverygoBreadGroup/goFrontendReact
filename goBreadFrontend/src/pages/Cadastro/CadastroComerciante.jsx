@@ -37,7 +37,7 @@ function CadastroComerciante() {
         senha: yup.string().required("A SENHA é obrigatória.").min(8, "A SENHA deve ter no mínimo 8 caracteres.").max(16, "A SENHA deve ter no máximo 16 caracteres."),
         cep: yup.string().required("O CEP é obrigatório."),
         razaoSocial: yup.string().required("A Razão Social é obrigatório.").max(255, "A Razão Social deve ter no máximo 255 caracteres."),
-        cnpj: yup.string().required("O CNPJ é obrigatório").min(14, "O CNPJ deve ter no mínimo 14 caracteres.").max(14, "O CNPJ deve ter no máximo 14 caracteres."),
+        cnpj: yup.string().required("O CNPJ é obrigatório").min(14, "O CNPJ deve ter no mínimo 18 caracteres.").max(14, "O CNPJ deve ter no máximo 14 caracteres."),
         numero: yup.string().required("O NÚMERO é obrigatório.").min(1, "O NÚMERO deve ter no mínimo 1 caracter."),
         complemento: yup.string().required("O COMPLEMENTO é obrigatório.").min(3, "O COMPLEMENTO deve ter no mínimo 3 caracteres.").max(255, "O COMPLEMENTO deve ter no máximo 255 caracteres."),
     });

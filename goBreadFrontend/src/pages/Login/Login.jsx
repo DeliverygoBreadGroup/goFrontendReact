@@ -2,7 +2,7 @@ import '../Login/Login.css';
 import '../../styles/StyleGlobal/style-global.css';
 import Logo from '../../assets/Icons/Group 16.svg';
 import LogoLogin from '../../assets/logoLogin.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
@@ -10,6 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
+
+    const navigation = useNavigate(); 
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -45,6 +47,17 @@ function Login() {
                         progress: undefined,
                         theme: "light",
                     })
+
+                    const tipoUsuario = response.data.cliente.tipo;
+
+                    if (tipoUsuario === 'cliente') {
+                        setTimeout(() => {
+                            navigation('/portalCliente');
+                        }, 2000);
+                    } else if (tipoUsuario === 'comerciante') {
+                        realizarLoginComerciante(data);
+                    }
+
                     console.log(response.data);
                     console.log(response.data.token);
                 } else {
@@ -52,6 +65,28 @@ function Login() {
                 }
             }).catch((error) => {
                 console.log(error);
+            });
+    };
+
+    const realizarLoginComerciante = (data) => {
+        const dadosComerciante = {
+            email: email,
+            senha: senha,
+        };
+    
+        axios.post('http://localhost:8080/comercios/login', dadosComerciante, config)
+            .then((response) => {
+                if (response.status === 200 && response.data?.token) {
+                    sessionStorage.setItem('authToken', response.data.token);
+                    setTimeout(() => {
+                        navigation('/portalComerciante');
+                    }, 2000);
+                } else {
+                    throw new Error('Ops! Ocorreu um erro interno no login do comerciante.');
+                }
+            })
+            .catch((error) => {
+                console.error('Erro ao realizar login do comerciante:', error);
             });
     };
 

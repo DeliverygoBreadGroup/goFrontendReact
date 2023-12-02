@@ -28,7 +28,7 @@ function Assinatura() {
         axios.patch(`http://localhost:8080/clientes/assinatura/${idCliente}?assinatura=${tipoAssinatura}`)
             .then((response) => {
                 console.log(response);
-                sessionStorage.setItem('clienteData', JSON.stringify(response));
+                sessionStorage.setItem('tipoAssinatura', tipoAssinatura);
                 toast.success('Assinatura concluída! Aproveite todos os benefícios.');
 
                 setTimeout(() => {

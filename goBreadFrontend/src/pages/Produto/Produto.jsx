@@ -10,9 +10,15 @@ import CardProduto from '../../components/ProdutoComponent/ProdutoComponent';
 import Swal from 'sweetalert2'
 
 function Produto() {
-
+    
     const Navigation = useNavigate(); 
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [tipoAssinatura, setTipoAssinatura] = useState('');
+
+    useEffect(() => {
+        const tipoAssinatura = sessionStorage.getItem('tipoAssinatura');
+        setTipoAssinatura(tipoAssinatura);
+    }, []);
 
     useEffect(() => {
         const selectedItems = JSON.parse(sessionStorage.getItem('selectedInputs'));
@@ -43,7 +49,7 @@ function Produto() {
         fetchItensPadaria();
     }, []);
 
-    const [pedidoItens, setPedidoItens] = useState([]);
+    // const [pedidoItens, setPedidoItens] = useState([]);
 
     const updateQuantidadeSelecionada = (productId, quantidade) => {
         const updatedItensPadaria = itensPadaria.map((item) => {
