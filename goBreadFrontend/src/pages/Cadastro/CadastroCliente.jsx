@@ -112,7 +112,7 @@ function CadastroCliente() {
         axios.post('http://localhost:8080/clientes/cadastrar', formData, config)
             .then((response) => {
                 if (response.status == 201 && response.data?.id) {
-                    sessionStorage.setItem('id', response.data.id);
+                    sessionStorage.setItem('idCliente', response.data.id);
                     sessionStorage.setItem('bairro', response.data.endereco.bairro);
                     console.log(response);
                     console.log(formData);

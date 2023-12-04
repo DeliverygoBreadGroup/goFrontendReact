@@ -23,7 +23,7 @@ function ProdutoComerciante() {
     };
 
     const handleAvancarClick = async () => {
-        const idComercio = sessionStorage.getItem('id');
+        const idComercio = sessionStorage.getItem('idComerciante');
         const itensComercio = selectedProducts.map((idProduto) => ({ idComercio, idProduto }));
         const postData = { itensComercio };
 

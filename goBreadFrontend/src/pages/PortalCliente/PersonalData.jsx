@@ -33,7 +33,7 @@ function PersonalData() {
     useEffect(() => {
         async function fetchClienteData() {
             try {
-                const idCliente = sessionStorage.getItem('id');
+                const idCliente = sessionStorage.getItem('idCliente');
                 const response = await axios.get(`http://localhost:8080/clientes/${idCliente}`);
                 setClienteData(response.data);
                 console.log(response);
@@ -51,7 +51,7 @@ function PersonalData() {
 
     const handleSave = async () => {
         try {
-            const idCliente = sessionStorage.getItem('id');
+            const idCliente = sessionStorage.getItem('idCliente');
             await axios.put(`http://localhost:8080/clientes/${idCliente}`, clienteData);
             toast.success('Informações atualizadas com sucesso!');
             setEditMode(false);
@@ -71,9 +71,9 @@ function PersonalData() {
 
     const deletarConta = async () => {
         try{
-            const idCliente = sessionStorage.getItem('id');
+            const idCliente = sessionStorage.getItem('idCliente');
             await axios.delete(`http://localhost:8080/clientes/${idCliente}`);
-            toast.success('Informações atualizadas com sucesso!');
+            toast.success('Conta deletada!');
         } catch (error) {
             console.error('Erro ao salvar as informações:', error);
         }

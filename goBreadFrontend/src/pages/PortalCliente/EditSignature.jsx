@@ -18,7 +18,7 @@ function EditSignature() {
     const [tipoAssinatura, setTipoAssinatura] = useState();
 
     const handleEnviar = () => {
-        const idCliente = sessionStorage.getItem('id');
+        const idCliente = sessionStorage.getItem('idCliente');
 
         if (!tipoAssinatura) {
             toast.error('Por favor, selecione um tipo de assinatura.');

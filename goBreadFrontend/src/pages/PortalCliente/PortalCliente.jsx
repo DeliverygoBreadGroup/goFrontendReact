@@ -23,7 +23,7 @@ function PortalCliente() {
     useEffect(() => {
         async function fetchCliente() {
             try {
-                const idCliente = sessionStorage.getItem('id');
+                const idCliente = sessionStorage.getItem('idCliente');
                 const response = await axios.get(`http://localhost:8080/clientes/${idCliente}`);
                 setCliente(response.data);
                 setLoading(false);

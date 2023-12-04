@@ -70,12 +70,14 @@ function DadosComerciante() {
         });
     };
 
+    const idComerciante = sessionStorage.getItem('idComerciante');
+    console.log(idComerciante);
     
     const deletarConta = async () => {
         try{
-            const idCliente = sessionStorage.getItem('id');
-            await axios.delete(`http://localhost:8080/clientes/${idCliente}`);
-            toast.success('Informações atualizadas com sucesso!');
+            const idComerciante = sessionStorage.getItem('idComerciante');
+            await axios.delete(`http://localhost:8080/comercios/${idComerciante}`);
+            toast.success('Conta deletada!');
         } catch (error) {
             console.error('Erro ao salvar as informações:', error);
         }

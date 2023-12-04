@@ -33,7 +33,7 @@ function Produto() {
     const [itensPadaria, setItensPadaria] = useState([]);
 
     const selectedPadariaId = sessionStorage.getItem('selectedPadariaId');
-    const idCliente = sessionStorage.getItem('id');
+    const idCliente = sessionStorage.getItem('idCliente');
     const idComercio = sessionStorage.getItem('selectedPadariaId');
 
     useEffect(() => {
@@ -48,8 +48,6 @@ function Produto() {
 
         fetchItensPadaria();
     }, []);
-
-    // const [pedidoItens, setPedidoItens] = useState([]);
 
     const updateQuantidadeSelecionada = (productId, quantidade) => {
         const updatedItensPadaria = itensPadaria.map((item) => {

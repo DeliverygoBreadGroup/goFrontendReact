@@ -114,7 +114,7 @@ function CadastroComerciante() {
         axios.post('http://localhost:8080/comercios/cadastrar', formData, config)
             .then((response) => {
                 if(response.status == 201 && response.data?.id){
-                    sessionStorage.setItem('id', response.data.id);
+                    sessionStorage.setItem('idComerciante', response.data.id);
                 }
                 console.log(response);
                 console.log(formData);
