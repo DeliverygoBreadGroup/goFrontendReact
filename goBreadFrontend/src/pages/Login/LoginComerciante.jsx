@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Login() {
+function LoginComerciante() {
 
     const navigation = useNavigate(); 
 
@@ -33,7 +33,7 @@ function Login() {
             }
         };
 
-        axios.post('http://localhost:8080/clientes/login', data, config)
+        axios.post('http://localhost:8080/comercios/login', data, config)
             .then((response) => {
                 if (response.status == 200 && response.data?.token) {
                     sessionStorage.setItem('authToken', response.data.token);
@@ -51,7 +51,7 @@ function Login() {
                     console.log(response.data.token);
 
                     setTimeout(() => {
-                        navigation('/portalCliente');
+                        navigation('/portalComerciante');
                     }, 1000);
                 } else {
                     throw new Error('Ops! Ocorreu um erro interno.');
@@ -82,7 +82,6 @@ function Login() {
                             <div className="containerRightLogin">
                                 <h1>Entrar</h1>
                                 <div className="titleLogin">
-                                    <h3>Login para comerciantes, <Link to='/loginComerciante'><a href='/' className='click-link-register'>Clique aqui</a></Link></h3>
                                     <h3><span>Acesse</span> seu portal de compras.</h3>
                                 </div>
                                 <form onSubmit={submeter}>
@@ -116,4 +115,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default LoginComerciante;

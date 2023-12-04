@@ -18,6 +18,8 @@ import ProdutoComerciante from './pages/ProdutoComerciante/ProdutoComerciante';
 import PortalComerciante from './pages/PortalComerciante/PortalComerciante';
 import DadosComerciante from './pages/PortalComerciante/DadosComerciante';
 import Arquivo from './pages/PortalComerciante/Arquivo';
+import ClienteComerciante from './pages/ClienteComerciante/ClienteComerciante';
+import LoginComerciante from './pages/Login/LoginComerciante';
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
           <Route path='/portalComerciante' element={<PortalComerciante />} />
           <Route path='/dadosComerciante' element={<DadosComerciante />} />
           <Route path='/relatorios' element={<Arquivo />} />
+          <Route path='/destinoCadastro' element={<ClienteComerciante />} />
+          <Route path='/loginComerciante' element={<LoginComerciante />} />
         </Routes>
       </Router>
     </>
