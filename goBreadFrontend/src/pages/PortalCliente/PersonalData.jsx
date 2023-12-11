@@ -10,11 +10,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 function PersonalData() {
 
     const history = useNavigate();
-    
+
     const [clienteData, setClienteData] = useState({
         nome: '',
         cpf: '',
@@ -70,14 +71,32 @@ function PersonalData() {
     };
 
     const deletarConta = async () => {
-        try{
-            const idCliente = sessionStorage.getItem('idCliente');
-            await axios.delete(`http://localhost:8080/clientes/${idCliente}`);
-            toast.success('Conta deletada!');
-        } catch (error) {
-            console.error('Erro ao salvar as informações:', error);
+        const confirmacao = await Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Você realmente quer cancelar sua conta?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, cancelar!',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (confirmacao.isConfirmed) {
+            try {
+                const idCliente = sessionStorage.getItem('idCliente');
+                await axios.delete(`http://localhost:8080/clientes/${idCliente}`);
+                toast.success('Conta deletada!');
+
+                setTimeout(() => {
+                    history('/');
+                }, 1500);
+            } catch (error) {
+                console.error('Erro ao salvar as informações:', error);
+            }
         }
     }
+
 
     return (
         <>
@@ -99,7 +118,7 @@ function PersonalData() {
             <main className='father-user-info'>
                 <section className='user-info-container'>
                     <div className='user-info-form'>
-                    <h1>Minhas informações</h1>
+                        <h1>Minhas informações</h1>
                         <label htmlFor="cpf">CPF</label>
                         <input
                             className="ipt-info-user"
@@ -159,8 +178,8 @@ function PersonalData() {
                     </div>
 
                     <div className="user-info-form2">
-                    <label htmlFor="tipo">Tipo de cliente</label>
-                    <input
+                        <label htmlFor="tipo">Tipo de cliente</label>
+                        <input
                             className="ipt-info-user"
                             type="text"
                             placeholder='Tipo'
@@ -198,7 +217,7 @@ function PersonalData() {
                             value={clienteData.endereco.complemento}
                             disabled={!editMode}
                             onChange={handleInputChange}
-                        />  
+                        />
 
                         <div className="user-actions">
                             <button className='btn-actions-editar' onClick={deletarConta}>Deletar conta</button>

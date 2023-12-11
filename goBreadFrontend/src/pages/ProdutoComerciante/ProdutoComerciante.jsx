@@ -43,7 +43,7 @@ function ProdutoComerciante() {
 
             setTimeout(() => {
                 history('/portalComerciante');
-            }, 1000);
+            }, 1500);
         } catch (error) {
             console.error('Erro na chamada POST:', error);
         }

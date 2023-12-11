@@ -86,7 +86,8 @@ function Produto() {
                 showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonText: "Finalizar",
-                denyButtonText: "Outro pedido"
+                denyButtonText: "Outro pedido",
+                cancelButtonText: 'Cancelar'
               }).then(async (result) => {
                 if (result.isConfirmed) {
                   const response = await axios.post('http://localhost:8080/pedidos/salvar-pedidos', data);

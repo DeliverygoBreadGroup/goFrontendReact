@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 function DadosComerciante() {
 
@@ -72,16 +73,34 @@ function DadosComerciante() {
 
     const idComerciante = sessionStorage.getItem('idComerciante');
     console.log(idComerciante);
-    
+
     const deletarConta = async () => {
-        try{
-            const idComerciante = sessionStorage.getItem('idComerciante');
-            await axios.delete(`http://localhost:8080/comercios/${idComerciante}`);
-            toast.success('Conta deletada!');
-        } catch (error) {
-            console.error('Erro ao salvar as informações:', error);
+        const confirmacao = await Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Você realmente quer cancelar sua conta?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, cancelar!',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (confirmacao.isConfirmed) {
+            try {
+                const idComerciante = sessionStorage.getItem('idComerciante');
+                await axios.delete(`http://localhost:8080/comercios/${idComerciante}`);
+                toast.success('Conta deletada!');
+
+                setTimeout(() => {
+                    history('/');
+                }, 1500);
+            } catch (error) {
+                console.error('Erro ao salvar as informações:', error);
+            }
         }
     }
+
 
     return (
         <>
@@ -113,7 +132,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                         <label htmlFor="razaoSocial">Responsável</label>
+                        <label htmlFor="razaoSocial">Responsável</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -123,7 +142,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                         <label htmlFor="razaoSocial">CNPJ</label>
+                        <label htmlFor="razaoSocial">CNPJ</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -133,7 +152,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                         <label htmlFor="razaoSocial">Email</label>
+                        <label htmlFor="razaoSocial">Email</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -162,8 +181,8 @@ function DadosComerciante() {
                     </div>
 
                     <div className="endereco">
-                    <label htmlFor="razaoSocial">Telefone</label>
-                          <input
+                        <label htmlFor="razaoSocial">Telefone</label>
+                        <input
                             className="ipt-info-user"
                             type="text"
                             placeholder='Telefone'
@@ -172,7 +191,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                         <label htmlFor="razaoSocial">Tipo de cliente</label>
+                        <label htmlFor="razaoSocial">Tipo de cliente</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -182,7 +201,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                    <label htmlFor="razaoSocial">CEP</label>
+                        <label htmlFor="razaoSocial">CEP</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -192,7 +211,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                         <label htmlFor="razaoSocial">Endereço</label>
+                        <label htmlFor="razaoSocial">Endereço</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -202,7 +221,7 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                         <label htmlFor="razaoSocial">Complemento</label>
+                        <label htmlFor="razaoSocial">Complemento</label>
                         <input
                             className="ipt-info-user"
                             type="text"
@@ -212,11 +231,11 @@ function DadosComerciante() {
                             disabled={!editMode}
                             onChange={handleInputChange}
                         />
-                        </div>
 
                         <div className="user-actions">
                             <button className='btn-actions-editar' onClick={deletarConta}>Deletar conta</button>
                         </div>
+                    </div>
                 </section>
             </main>
         </>

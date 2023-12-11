@@ -33,7 +33,7 @@ function Assinatura() {
 
                 setTimeout(() => {
                     history('/padaria');
-                }, 1000);
+                }, 1500);
             })
             .catch((error) => {
                 console.error('Erro ao atualizar a assinatura:', error);
