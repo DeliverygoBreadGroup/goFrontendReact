@@ -109,7 +109,7 @@ function CadastroCliente() {
     };
 
     const addRegister = async (e) => {
-        axios.post('http://localhost:8080/clientes/cadastrar', formData, config)
+        axios.post('http://3.82.51.193:8080/clientes/cadastrar', formData, config)
             .then((response) => {
                 if (response.status == 201 && response.data?.id) {
                     sessionStorage.setItem('idCliente', response.data.id);
