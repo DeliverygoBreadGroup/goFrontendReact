@@ -78,7 +78,7 @@ function PersonalData() {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, cancelar!',
+            confirmButtonText: 'Sim, deletar!',
             cancelButtonText: 'Cancelar'
         });
 
