@@ -78,7 +78,7 @@ function EditSignature() {
                                         <div class="card-content">
                                             <h4>BASIC</h4>
                                             <h5>Menor capacidade de quantidades.</h5>
-                                            <h3>R$ 79,90/ mês</h3>
+                                            <h3>R$249,90/ mês</h3>
                                         </div>
                                     </div>
                                 </label>
@@ -90,7 +90,7 @@ function EditSignature() {
                                         <div class="card-content">
                                             <h4>FAMILY</h4>
                                             <h5>Ampla capacidade de quantidades.</h5>
-                                            <h3>R$ 129,90/ mês</h3>
+                                            <h3>R$ 299,90/ mês</h3>
                                         </div>
                                     </div>
                                 </label>
