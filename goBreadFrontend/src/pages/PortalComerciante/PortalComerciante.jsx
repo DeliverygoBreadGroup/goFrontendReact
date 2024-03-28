@@ -22,7 +22,7 @@ function PortalComerciante() {
         async function fetchComercioData() {
             try {
                 const idPadaria = sessionStorage.getItem('selectedPadariaId');
-                const response = await axios.get(`http://3.85.53.213:8080/comercios/${idPadaria}`);
+                const response = await axios.get(`http://54.157.16.1:8080/comercios/${idPadaria}`);
                 setComercioData(response.data);
                 setLoading(false);
             } catch (error) {
@@ -37,7 +37,7 @@ function PortalComerciante() {
         try {
             const confirmed = await showConfirmation();
             if (confirmed) {
-                await axios.delete(`http://3.85.53.213:8080/pedidos/${pedidoId}`);
+                await axios.delete(`http://54.157.16.1:8080/pedidos/${pedidoId}`);
                 setCliente(prevCliente => ({
                     ...prevCliente,
                     pedidos: prevCliente.pedidos.filter(pedido => pedido.id !== pedidoId)
@@ -45,7 +45,7 @@ function PortalComerciante() {
 
                 const revertConfirmed = await showRevertConfirmation();
                 if (revertConfirmed) {
-                    await axios.post(`http://3.85.53.213:8080/pedidos/reverter-delete`, { pedidoId });
+                    await axios.post(`http://54.157.16.1:8080/pedidos/reverter-delete`, { pedidoId });
                     window.location.reload();
                 }
             }
