@@ -36,7 +36,7 @@ function DadosComerciante() {
         async function fetchComercianteData() {
             try {
                 const idPadaria = sessionStorage.getItem('selectedPadariaId');
-                const response = await axios.get(`http://54.157.16.1:8080/comercios/${idPadaria}`);
+                const response = await axios.get(`http://18.212.221.247:8080/comercios/${idPadaria}`);
                 setComercianteData(response.data);
                 console.log(response);
             } catch (error) {
@@ -54,7 +54,7 @@ function DadosComerciante() {
     const handleSave = async () => {
         try {
             const idPadaria = sessionStorage.getItem('selectedPadariaId');
-            await axios.put(`http://54.157.16.1:8080/comercios/${idPadaria}`, comercianteData);
+            await axios.put(`http://18.212.221.247:8080/comercios/${idPadaria}`, comercianteData);
             toast.success('Informações atualizadas com sucesso!');
             setEditMode(false);
         } catch (error) {
@@ -89,7 +89,7 @@ function DadosComerciante() {
         if (confirmacao.isConfirmed) {
             try {
                 const idComerciante = sessionStorage.getItem('idComerciante');
-                await axios.delete(`http://54.157.16.1:8080/comercios/${idComerciante}`);
+                await axios.delete(`http://18.212.221.247:8080/comercios/${idComerciante}`);
                 toast.success('Conta deletada!');
 
                 setTimeout(() => {

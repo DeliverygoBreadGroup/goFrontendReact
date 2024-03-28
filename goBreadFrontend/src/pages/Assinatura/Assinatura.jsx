@@ -25,7 +25,7 @@ function Assinatura() {
             return;
         }
 
-        axios.patch(`http://54.157.16.1:8080/clientes/assinatura/${idCliente}?assinatura=${tipoAssinatura}`)
+        axios.patch(`http://18.212.221.247:8080/clientes/assinatura/${idCliente}?assinatura=${tipoAssinatura}`)
             .then((response) => {
                 console.log(response);
                 sessionStorage.setItem('tipoAssinatura', tipoAssinatura);
