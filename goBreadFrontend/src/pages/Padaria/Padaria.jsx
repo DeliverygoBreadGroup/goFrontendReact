@@ -17,7 +17,7 @@ function Padaria() {
         const bairroAtual = sessionStorage.getItem('bairro');
       
         if (bairroAtual) {
-          axios.get('http://3.82.51.193:8080/comercios/bairro', {
+          axios.get('http://3.85.53.213:8080/comercios/bairro', {
             params: {
               bairro: bairroAtual
             }
